@@ -6,19 +6,19 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
     console.error(err);
     return;
   }
-  elfs = [0]
+  elves = [0]
   elfNumber = 0
   data.split(/\r?\n/).forEach(line =>  {
     if(line == '') {
         elfNumber++;
-        elfs[elfNumber] = 0
+        elves[elfNumber] = 0
     } else {
-        elfs[elfNumber] += parseInt(line)
+        elves[elfNumber] += parseInt(line)
     }
   });
 
-  const maxCalories = Math.max(...elfs);
-  const numberOfElfWithMaxCalories = elfs.indexOf(maxCalories) + 1
+  const maxCalories = Math.max(...elves);
+  const numberOfElfWithMaxCalories = elves.indexOf(maxCalories) + 1
 
   console.log(`The elf with the most number of calories is elf number ${numberOfElfWithMaxCalories} with ${maxCalories} calories`)
 
