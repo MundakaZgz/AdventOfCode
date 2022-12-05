@@ -1,5 +1,4 @@
 const fs = require('fs');
-const internal = require('stream');
 
 fs.readFile('./input.txt', 'utf8', (err, data) => {
   if (err) {
@@ -8,7 +7,7 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
   }
   elves = [0]
   elfNumber = 0
-  data.split(/\r?\n/).forEach(line =>  {
+  data.split(/\r?\n/).forEach(line => {
     if(line == '') {
         elfNumber++;
         elves[elfNumber] = 0
