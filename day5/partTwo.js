@@ -53,6 +53,7 @@ const moveCrates = (lines, crates) => {
         let poped = crates[from - 1].pop();
         accumulator.push(poped);
       }
+      accumulator.reverse();
       crates[to - 1] = [...crates[to - 1], ...accumulator];
 
     }
