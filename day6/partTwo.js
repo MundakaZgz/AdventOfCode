@@ -9,9 +9,9 @@ fs.readFile('./input.txt', 'utf8', (err, data) => {
   let firstMarker = 0
 
   for (let i = 0; i < data.length; i++) {
-    const buffer = data.slice(i,i+4).split('')
+    const buffer = data.slice(i,i+14).split('')
     if(areAllDifferent(buffer)) {
-        firstMarker = i + 4;
+        firstMarker = i + 14;
         break
     }
   }
