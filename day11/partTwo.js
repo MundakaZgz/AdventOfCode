@@ -11,6 +11,17 @@ const readData = () => {
     return data
 }
 
+const getLCM = divisors => {
+    const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+    let lcm = 1;
+  
+    for (const divisor of divisors) {
+      lcm = (lcm * divisor) / gcd(lcm, divisor);
+    }
+  
+    return lcm;
+  }
+
 const main = () => {
     let data = readData()
     let monkeys = []
@@ -41,13 +52,13 @@ const prepareMonkeys = (data, monkeys) => {
             foundOperation = new Function('old', `return ${line.substring(line.indexOf('=') + 1)}`)
         }
         if (line.startsWith('  Test:')) {
-            foundDivisibleBy = Number(line.split(' ').at(-1))
+            foundDivisibleBy = Number(line.match(/  Test: divisible by (\d+)/)[1])
         }
         if (line.startsWith('    If true:')) {
-            foundMonkeyToIfTrue = Number(line.split(' ').at(-1))
+            foundMonkeyToIfTrue = Number(line.match(/    If true: throw to monkey (\d+)/)[1])
         }
         if (line.startsWith('    If false:')) {
-            foundmonkeyToIfFalse = Number(line.split(' ').at(-1))
+            foundmonkeyToIfFalse = Number(line.match(/    If false: throw to monkey (\d+)/)[1])
             monkeys.push(new Monkey(id, foundItems, foundOperation, foundDivisibleBy, foundMonkeyToIfTrue, foundmonkeyToIfFalse))
             id++
         }
@@ -79,10 +90,11 @@ class Monkey {
 
     play = (monkeys) => {
         const numberOfItems = this.list.length
+        const lcm = getLCM(monkeys.map((x) => x.divisibleBy));
         for (let index = 0; index < numberOfItems; index++) {
             let item = this.list.shift()
             item = this.operation(item)
-        //    item = Math.floor(item / 3)
+            item = item % lcm
             monkeys[this.sendTo(item)].list.push(item)
             this.itemsInspected++
         }
