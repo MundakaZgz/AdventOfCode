@@ -7,3 +7,7 @@ python3 prepareYear.py
 ```
 This utility will create a folder named after the current year with a folder inside for each of the days in the challenge.
 
+## Challenge status by year
+|Year|Status|
+|---|---|
+|2022|In progress|
