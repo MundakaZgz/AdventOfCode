@@ -1,0 +1,23 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "Advent of code",
+  "main": "index.js",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "scripts": {
+    "test": "mocha src/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MundakaZgz/AdventOfCode2023.git"
+  },
+  "author": "Jose A. Herrero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MundakaZgz/AdventOfCode2023/issues"
+  },
+  "homepage": "https://github.com/MundakaZgz/AdventOfCode2023#readme"
+}
