@@ -1,4 +1,4 @@
-# AdventOfCode
+# 🎄  Advent Of Code 🎄 
 In this repository I will try to fulfill all the challenges of [Advent of code](https://adventofcode.com)
 
 In order to prepare a new year of challenges there is the `prepareYear.py` utility that can be run using
