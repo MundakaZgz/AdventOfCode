@@ -1,29 +1,33 @@
 const fs = require('fs');
+const path = require('path');
 
-fs.readFile('./input.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
+module.exports = function () {
+  const textFilePath = path.join(__dirname, 'input.txt');
 
-  let firstMarker = 0
-
-  for (let i = 0; i < data.length; i++) {
-    const buffer = data.slice(i,i+4).split('')
-    if(areAllDifferent(buffer)) {
-        firstMarker = i + 4;
-        break
+  fs.readFile(textFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
     }
-  }
 
-  console.log(`First marker after character: ${firstMarker}`)
+    let firstMarker = 0;
 
-});
+    for (let i = 0; i < data.length; i++) {
+      const buffer = data.slice(i, i + 4).split('');
+      if (areAllDifferent(buffer)) {
+        firstMarker = i + 4;
+        break;
+      }
+    }
 
-const areAllDifferent = (arr) => {
-  let set = new Set()
-  arr.forEach(element => {
-      set.add(element)
+    console.log(`First marker after character: ${firstMarker}`);
   });
-  return set.size == arr.length
-}
+
+  const areAllDifferent = (arr) => {
+    const set = new Set();
+    arr.forEach((element) => {
+      set.add(element);
+    });
+    return set.size == arr.length;
+  };
+};

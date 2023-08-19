@@ -1,24 +1,27 @@
 const fs = require('fs');
+const path = require('path');
 
-fs.readFile('./input.txt', 'utf8', (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
+module.exports = function () {
+  const textFilePath = path.join(__dirname, 'input.txt');
 
-  const filesystem = buildFilesystem(data.split(/\r?\n/))
+  fs.readFile(textFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
 
-  let total = 0;
+    const filesystem = buildFilesystem(data.split(/\r?\n/));
 
-  analyzeFilesystem(filesystem, (directory) => {
-    if (directory.size <= 100_000) total += directory.size;
+    let total = 0;
+
+    analyzeFilesystem(filesystem, (directory) => {
+      if (directory.size <= 100_000) total += directory.size;
+    });
+
+    console.log(`The size of the full directory is ${total}`);
   });
 
-  console.log(`The size of the full directory is ${total}`)
-
-});
-
-class Directory {
+  class Directory {
     constructor(label, parent) {
       this.label = label;
       this.parent = parent;
@@ -27,18 +30,18 @@ class Directory {
     }
   }
 
-const buildFilesystem = (input) => {
+  const buildFilesystem = (input) => {
     const relevantInput = input.filter(
-      (command) => !command.startsWith('dir') && !command.startsWith('$ ls')
+      (command) => !command.startsWith('dir') && !command.startsWith('$ ls'),
     );
-  
+
     const filesystem = new Directory('/', null);
-  
+
     let workingDirectory = null;
     for (const command of relevantInput) {
       if (command.startsWith('$ cd')) {
         const [, , newDirectoryLabel] = command.split(' ');
-  
+
         if (newDirectoryLabel === '/') {
           workingDirectory = filesystem;
         } else if (newDirectoryLabel === '..') {
@@ -50,7 +53,7 @@ const buildFilesystem = (input) => {
         }
       } else {
         const [filesize] = command.split(' ');
-  
+
         let current = workingDirectory;
         while (current.parent) {
           current.size += Number(filesize);
@@ -59,14 +62,15 @@ const buildFilesystem = (input) => {
         current.size += Number(filesize);
       }
     }
-  
+
     return filesystem;
-  }
+  };
 
   const analyzeFilesystem = (filesystem, action) => {
     action(filesystem);
-  
+
     for (const child of filesystem.children) {
       analyzeFilesystem(child, action);
     }
-  }
+  };
+};

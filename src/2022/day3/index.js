@@ -1,7 +1,10 @@
-module.exports = function() {
-    const partOne = require('./partOne.js')
-    partOne()
-    const partTwo = require('./partTwo.js')
-    partTwo()
-}
-
+module.exports = () => {
+    const partOne = require('./partOne');
+    if (partOne) {
+      partOne();
+    }
+    const partTwo = require('./partTwo');
+    if (partTwo) {
+      partTwo();
+    }
+  };
