@@ -11,7 +11,9 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha src/**/*.test.js"
+    "test": "mocha src/**/*.test.js",
+    "lint": "npx eslint ."
+
   },
   "repository": {
     "type": "git",
