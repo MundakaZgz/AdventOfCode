@@ -4,9 +4,10 @@ for (let year = 2022; year < new Date().getFullYear(); year++) {
   for (let day = 1; day < 25; day++) {
     console.group(day);
     const challenge = require(`./src/${year}/day${day}/index.js`);
-    if (challenge) {
+    if (typeof challenge === 'function') {
       challenge();
     }
+
     console.groupEnd();
   }
 

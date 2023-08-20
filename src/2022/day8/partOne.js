@@ -2,33 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
-
-  fs.readFile(textFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const treeArray = loadData(data);
-    const numOfVisibleTrees = countVisibleTrees(treeArray);
-
-    console.log(`There are ${numOfVisibleTrees} visible trees`);
-  });
-
   const loadData = (data) => data.split(/\r?\n/).map((n) => n.split(''));
-
-  const countVisibleTrees = (treeArray) => {
-    let visibleTrees = 0;
-    const [numberOfRows, numberOfCols] = [treeArray.length, treeArray[0].length];
-
-    for (let row = 0; row < numberOfRows; row++) {
-      for (let col = 0; col < numberOfCols; col++) {
-        visibleTrees += isVisible(treeArray, row, col);
-      }
-    }
-    return visibleTrees;
-  };
 
   const isBorder = (treeArray, row, col) => {
     const [numberOfRows, numberOfCols] = [treeArray.length, treeArray[0].length];
@@ -56,4 +30,30 @@ module.exports = function () {
       colValues.slice(row + 1).every(isValid),
     ].some(Boolean);
   };
+
+  const countVisibleTrees = (treeArray) => {
+    let visibleTrees = 0;
+    const [numberOfRows, numberOfCols] = [treeArray.length, treeArray[0].length];
+
+    for (let row = 0; row < numberOfRows; row++) {
+      for (let col = 0; col < numberOfCols; col++) {
+        visibleTrees += isVisible(treeArray, row, col);
+      }
+    }
+    return visibleTrees;
+  };
+
+  const textFilePath = path.join(__dirname, 'input.txt');
+
+  fs.readFile(textFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const treeArray = loadData(data);
+    const numOfVisibleTrees = countVisibleTrees(treeArray);
+
+    console.log(`There are ${numOfVisibleTrees} visible trees`);
+  });
 };
