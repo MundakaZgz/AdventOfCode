@@ -2,15 +2,23 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
+  function getData() {
+    const textFilePath = path.join(__dirname, 'input.txt');
+    const data = fs.readFileSync(textFilePath, 'utf8');
+    return data;
+  }
 
-  fs.readFile(textFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  function areAllDifferent(arr) {
+    const set = new Set();
+    arr.forEach((element) => {
+      set.add(element);
+    });
+    return set.size === arr.length;
+  }
 
+  function main() {
     let firstMarker = 0;
+    const data = getData();
 
     for (let i = 0; i < data.length; i++) {
       const buffer = data.slice(i, i + 4).split('');
@@ -21,13 +29,7 @@ module.exports = function () {
     }
 
     console.log(`First marker after character: ${firstMarker}`);
-  });
+  }
 
-  const areAllDifferent = (arr) => {
-    const set = new Set();
-    arr.forEach((element) => {
-      set.add(element);
-    });
-    return set.size == arr.length;
-  };
+  main();
 };
