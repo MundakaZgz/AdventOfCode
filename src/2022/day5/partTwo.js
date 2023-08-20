@@ -2,30 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
-
-  fs.readFile(textFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const lines = data.split(/\r?\n/);
-    const crates = [];
-
-    for (let i = 0; i < (lines[0].length + 1) / 4; i++) {
-      crates.push([]);
-    }
-
-    loadCrates(lines, crates);
-    crates.map((x) => x.reverse());
-    moveCrates(lines, crates);
-
-    const topCrates = crates.map((x) => x.at(-1)).join('');
-    console.log(`The crates at the top are ${topCrates}`);
-  });
-
-  const loadCrates = (lines, crates) => {
+  function getData() {
+    const textFilePath = path.join(__dirname, 'input.txt');
+    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    return data;
+  }
+  function loadCrates(lines, crates) {
     const crateContent = /[A-Z]/gm;
     const isCrateContent = new RegExp(crateContent);
 
@@ -41,9 +23,9 @@ module.exports = function () {
         }
       }
     }
-  };
+  }
 
-  const moveCrates = (lines, crates) => {
+  function moveCrates(lines, crates) {
     const movementRegex = /move (\d+) from (\d+) to (\d+)/;
     const movementRegexRecognizer = new RegExp(movementRegex);
     lines.forEach((line) => {
@@ -60,5 +42,23 @@ module.exports = function () {
         crates[to - 1] = [...crates[to - 1], ...accumulator];
       }
     });
-  };
+  }
+
+  function main() {
+    const lines = getData();
+    const crates = [];
+
+    for (let i = 0; i < (lines[0].length + 1) / 4; i++) {
+      crates.push([]);
+    }
+
+    loadCrates(lines, crates);
+    crates.map((x) => x.reverse());
+    moveCrates(lines, crates);
+
+    const topCrates = crates.map((x) => x.at(-1)).join('');
+    console.log(`The crates at the top are ${topCrates}`);
+  }
+
+  main();
 };
