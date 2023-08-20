@@ -2,24 +2,11 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
-
-  fs.readFile(textFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const filesystem = buildFilesystem(data.split(/\r?\n/));
-
-    let total = 0;
-
-    analyzeFilesystem(filesystem, (directory) => {
-      if (directory.size <= 100_000) total += directory.size;
-    });
-
-    console.log(`The size of the full directory is ${total}`);
-  });
+  function getData() {
+    const textFilePath = path.join(__dirname, 'input.txt');
+    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    return data;
+  }
 
   class Directory {
     constructor(label, parent) {
@@ -30,7 +17,7 @@ module.exports = function () {
     }
   }
 
-  const buildFilesystem = (input) => {
+  function buildFilesystem(input) {
     const relevantInput = input.filter(
       (command) => !command.startsWith('dir') && !command.startsWith('$ ls'),
     );
@@ -64,13 +51,27 @@ module.exports = function () {
     }
 
     return filesystem;
-  };
+  }
 
-  const analyzeFilesystem = (filesystem, action) => {
+  function analyzeFilesystem(filesystem, action) {
     action(filesystem);
 
     for (const child of filesystem.children) {
       analyzeFilesystem(child, action);
     }
-  };
+  }
+
+  function main() {
+    const filesystem = buildFilesystem(getData());
+
+    let total = 0;
+
+    analyzeFilesystem(filesystem, (directory) => {
+      if (directory.size <= 100_000) total += directory.size;
+    });
+
+    console.log(`The size of the full directory is ${total}`);
+  }
+
+  main();
 };

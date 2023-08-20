@@ -2,28 +2,11 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
-
-  fs.readFile(textFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const filesystem = buildFilesystem(data.split(/\r?\n/));
-
-    const currentSpace = 70_000_000 - filesystem.size;
-    const requiredSpace = 30_000_000 - currentSpace;
-    const candidates = [];
-
-    analyzeFilesystem(filesystem, (directory) => {
-      if (directory.size >= requiredSpace) candidates.push(directory);
-    });
-
-    const selectedFolder = Math.min(...candidates.map((candidate) => candidate.size));
-
-    console.log(`The folder you have to delete is ${selectedFolder}`);
-  });
+  function getData() {
+    const textFilePath = path.join(__dirname, 'input.txt');
+    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    return data;
+  }
 
   class Directory {
     constructor(label, parent) {
@@ -34,7 +17,7 @@ module.exports = function () {
     }
   }
 
-  const buildFilesystem = (input) => {
+  function buildFilesystem(input) {
     const relevantInput = input.filter(
       (command) => !command.startsWith('dir') && !command.startsWith('$ ls'),
     );
@@ -68,13 +51,31 @@ module.exports = function () {
     }
 
     return filesystem;
-  };
+  }
 
-  const analyzeFilesystem = (filesystem, action) => {
+  function analyzeFilesystem(filesystem, action) {
     action(filesystem);
 
     for (const child of filesystem.children) {
       analyzeFilesystem(child, action);
     }
-  };
+  }
+
+  function main() {
+    const filesystem = buildFilesystem(getData());
+
+    const currentSpace = 70_000_000 - filesystem.size;
+    const requiredSpace = 30_000_000 - currentSpace;
+    const candidates = [];
+
+    analyzeFilesystem(filesystem, (directory) => {
+      if (directory.size >= requiredSpace) candidates.push(directory);
+    });
+
+    const selectedFolder = Math.min(...candidates.map((candidate) => candidate.size));
+
+    console.log(`The folder you have to delete is ${selectedFolder}`);
+  }
+
+  main();
 };
