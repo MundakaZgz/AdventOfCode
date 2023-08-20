@@ -13,7 +13,7 @@ module.exports = function () {
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      if (line.length == 0) {
+      if (line.length === 0) {
         break;
       }
       for (let j = 0; j < line.length; j++) {

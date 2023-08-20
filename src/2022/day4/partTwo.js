@@ -9,7 +9,7 @@ module.exports = function () {
   }
 
   function main() {
-    numAssignmentsFullyContained = 0;
+    let numAssignmentsFullyContained = 0;
     const data = getData();
 
     for (const pair of data) {

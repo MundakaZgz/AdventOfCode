@@ -9,17 +9,17 @@ module.exports = function () {
   }
 
   function main() {
-    priorities = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    sumOfPriorities = 0;
+    const priorities = ['', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    let sumOfPriorities = 0;
 
     const data = getData();
 
     for (const rucksack of data) {
-      compartment1 = rucksack.slice(0, rucksack.length / 2);
-      compartment2 = rucksack.slice(-rucksack.length / 2);
-      foundLetter = '';
+      const compartment1 = rucksack.slice(0, rucksack.length / 2);
+      const compartment2 = rucksack.slice(-rucksack.length / 2);
+      let foundLetter = '';
       compartment1.split('').forEach((letter) => {
-        if (compartment2.indexOf(letter) != -1) {
+        if (compartment2.indexOf(letter) !== -1) {
           foundLetter = letter;
         }
         sumOfPriorities += priorities.indexOf(foundLetter);
