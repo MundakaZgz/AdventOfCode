@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = () => {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
+    const textFilePath = path.join(__dirname, 'test_input.txt');
     const data = fs
       .readFileSync(textFilePath, 'utf-8')
       .split('\n\n');
