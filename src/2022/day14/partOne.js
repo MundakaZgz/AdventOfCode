@@ -11,20 +11,6 @@ const INITIAL_SAND_COORDINATES = { x: 500, y: 0 };
     return data;
   }
 
-  function getInitialMapFromData(data) {
-    const coordinatesList = data.map((walkpath) => walkpath
-      .split('->')
-      .map((step) => {
-        const [x, y] = step.trim().split(',').map((coord) => parseInt(coord, 10));
-        return { x, y };
-      })).flat();
-
-    const maxDepth = Math.max(...coordinatesList.map((o) => o.y));
-    const maxWidth = Math.max(...coordinatesList.map((o) => o.x));
-
-    return Array(maxDepth).fill(Array(maxWidth).fill('.'));
-  }
-
   function markMapFromTo(map, from, to) {
     const yBegin = Math.min(from.x, to.x);
     const yEnd = Math.max(from.x, to.x);
@@ -33,96 +19,96 @@ const INITIAL_SAND_COORDINATES = { x: 500, y: 0 };
 
     for (let x = xBegin; x < xEnd; x++) {
       for (let y = yBegin; y < yEnd; y++) {
-        map[x][y] = '#';
+        map.add(`${x},${y}`);
       }
     }
+
+    return map;
   }
 
-  drawPathsFromData = (map, data) => {
+  drawPathsFromData = (data) => {
+    let maxDepth = 0;
+    let map = new Set();
     for (const path of data) {
       const points = path.split('->')
         .map((step) => step.trim()).map((step) => {
           [x, y] = step.split('');
+          maxDepth = Math.max(maxDepth, y);
           return { x, y };
         });
 
       for (let i = 0; i < points.length - 1; i++) {
-        markMapFromTo(map, points[i], points[i + 1]);
+        map = markMapFromTo(map, points[i], points[i + 1]);
       }
     }
+
+    maxDepth--;
+    return {map, maxDepth};
   }
 
   function getInput() {
     const data = getData();
-    const map = getInitialMapFromData(data);
-    drawPathsFromData(map, data);
-    return map;
+    return { map, maxDepth } = drawPathsFromData(data);
   }
 
   isEmpty = (map, coordinates) => {
-    return map[coordinates.y][coordinates.x] === '.';
+    return !map.has(`${coordinates.x},${coordinates.y}`);
   }
 
   sandCanGoDown = (map, sandUnitCoordinates) => {
     const nextCoordinate = { x: sandUnitCoordinates.x, y: sandUnitCoordinates.y + 1 };
-    if (nextCoordinate.y >= map.length) {
-      return false;
-    }
     return isEmpty(map, nextCoordinate);
   }
 
   sandCanGoDownLeft = (map, sandUnitCoordinates) => {
     const nextCoordinate = { x: sandUnitCoordinates.x - 1, y: sandUnitCoordinates.y + 1 };
-    if (nextCoordinate.y >= map.length || nextCoordinate.x < 0) {
-      return false;
-    }
     return isEmpty(map, nextCoordinate);
   }
 
   sandCanGoDownRight = (map, sandUnitCoordinates) => {
     const nextCoordinate = { x: sandUnitCoordinates.x + 1, y: sandUnitCoordinates.y + 1 };
-    if (nextCoordinate.y >= map.length || nextCoordinate.x > map[nextCoordinate.y].length - 1) {
-      return false;
-    }
     return isEmpty(map, nextCoordinate);
   }
 
-  isSandUnitAtInitialCoordinates = (sandUnitCoordinates, initialCoordinates) => {
-    return sandUnitCoordinates.x === initialCoordinates.x && sandUnitCoordinates.y === initialCoordinates.y;
-  }
-  
-  dropSandUnit = (map, initialCoordinates) => {
-    let sandUnitCoordinates = initialCoordinates;
-    while (true) {
-      if (sandCanGoDown(map, sandUnitCoordinates)) {
-        sandUnitCoordinates = { x: sandUnitCoordinates.x, y: sandUnitCoordinates.y + 1 };
-        couldDropSand = true;
-      } else if (sandCanGoDownLeft(map, sandUnitCoordinates)) {
-        sandUnitCoordinates = { x: sandUnitCoordinates.x - 1, y: sandUnitCoordinates.y + 1 };
-        couldDropSand = true;
-      } else if (sandCanGoDownRight(map, sandUnitCoordinates)) {
-        sandUnitCoordinates = { x: sandUnitCoordinates.x + 1, y: sandUnitCoordinates.y + 1 };
-        couldDropSand = true;
-      } else {
-        map[sandUnitCoordinates.y][sandUnitCoordinates.x] = 'o';
-        return !isSandUnitAtInitialCoordinates(sandUnitCoordinates, initialCoordinates);
+  dropAsManySandUnitsAsPossible = (map, initialCoordinates, maxDepth) => {
+    let sandUnits = 0;
+    let fallingIntoTheEndlessVoid = false;
+
+    while (!fallingIntoTheEndlessVoid) {
+      let sandUnitCoordinates = initialCoordinates;
+      sandUnits++;
+
+      while (!fallingIntoTheEndlessVoid) {
+        if (sandCanGoDown(map, sandUnitCoordinates)) {
+          console.log('sand can go down')
+          sandUnitCoordinates.y++;
+        } else if (sandCanGoDownLeft(map, sandUnitCoordinates)) {
+          console.log('sand can go down left')
+          sandUnitCoordinates.x--;
+          sandUnitCoordinates.y++;
+        } else if (sandCanGoDownRight(map, sandUnitCoordinates)) {
+          console.log('sand can go down right')
+          sandUnitCoordinates.x++;
+          sandUnitCoordinates.y++;
+        } else {
+          map.add(`${sandUnitCoordinates.x},${sandUnitCoordinates.y}`);
+          break;
+        }
+        if(sandUnitCoordinates.y >= maxDepth) {
+          fallingIntoTheEndlessVoid = true;
+          sandUnits--;
+        }
       }
     }
-  }
+    
+    console.log(`sandUnits: ${sandUnits}`);
 
-  dropAsManySandUnitsAsPossible = (map, initialCoordinates) => {
-    let couldDropSand = true;
-    let sandUnits = 0;
-    while (couldDropSand) {
-      couldDropSand = dropSandUnit(map, initialCoordinates);
-      sandUnits++;
-    }
     return sandUnits;
   }
 
-  function main() {
-    let map = getInput();
-    let sandUnits = dropAsManySandUnitsAsPossible(map, INITIAL_SAND_COORDINATES);
+ function main() {
+    let { map, maxDepth } = getInput();
+    let sandUnits = dropAsManySandUnitsAsPossible(map, INITIAL_SAND_COORDINATES, maxDepth);
     console.log(`${sandUnits} sand units could be dropped`);
   }
 
@@ -131,7 +117,6 @@ module.exports = {
   sandCanGoDownLeft,
   sandCanGoDownRight,
   isEmpty,
-  isSandUnitAtInitialCoordinates,
   dropAsManySandUnitsAsPossible,
   main,
 };
