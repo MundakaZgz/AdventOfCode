@@ -13,7 +13,6 @@
     "start": "node --inspect index.js",
     "test": "mocha src/**/*.test.js",
     "lint": "npx eslint ."
-
   },
   "repository": {
     "type": "git",
