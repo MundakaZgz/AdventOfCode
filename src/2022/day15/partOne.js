@@ -35,45 +35,52 @@ function getSensorsAndBeacons() {
   return sensorsAndBeacons;
 }
 
-function positionsOccupiedInLine(sensorsAndBeacons, line, maxPosition, minPosition) {
-  let positionsOccupied = 0;
-  for (let i = minPosition; i <= maxPosition; i++) {
-    let isOccupied = false;
-    for (let j = 0; j < sensorsAndBeacons.length; j++) {
-      let sensorAndBeacon = sensorsAndBeacons[j];
-      let sensorX = sensorAndBeacon.sensorX;
-      let sensorY = sensorAndBeacon.sensorY;
-      let beaconX = sensorAndBeacon.beaconX;
-      let beaconY = sensorAndBeacon.beaconY;
-      let isSensorInLine = (sensorX === line || sensorY === line);
-      let isBeaconInLine = (beaconX === line || beaconY === line);
-      if (isSensorInLine || isBeaconInLine) {
-        if (i >= Math.min(sensorX, beaconX) && i <= Math.max(sensorX, beaconX)) {
-          isOccupied = true;
-          break;
-        }
-      }
-    }
-    if (isOccupied) {
-      positionsOccupied++;
-    }
-  }
-  return positionsOccupied;
+function getManhattanDistance(x1, y1, x2, y2) {
+  return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 }
 
-function main() {
-  let sensorsAndBeacons = getSensorsAndBeacons();
-  let line = 10;
+function getOccupiedPositionsInLine(sensorsAndBeacons, line, minX, maxX) {
+  let occupiedPositions = [];
+  occupiedPositions.fill(false, minX, maxX);
+
+  sensorsAndBeacons.forEach((sensorAndBeacon) => {
+    if(sensorAndBeacon.sensorY <= line && sensorAndBeacon.beaconY >= line || sensorAndBeacon.sensorY >= line && sensorAndBeacon.beaconY <= line) {
+      console.log(`Line from ${sensorAndBeacon.sensorY} to ${sensorAndBeacon.beaconY} crosses line ${line}`);
+
+      let distanceBetweenSensorAndBeacon = getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, sensorAndBeacon.beaconX, sensorAndBeacon.beaconY);
+      console.log(`Distance between sensor and beacon: ${distanceBetweenSensorAndBeacon}`);
+      for(let i = 0; i < maxX - minX; i++) {
+        console.log(`Distance to sensor: ${getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, minX + i, line)}`);
+        if(getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, minX + i, line) <= distanceBetweenSensorAndBeacon) {
+          occupiedPositions[i] = true;
+        }
+      }
+    } 
+  });
+
+  return occupiedPositions;
+}
+
+function getMinAndMaxX(sensorsAndBeacons) {
   let minXSensor = Math.min(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.sensorX));
   let minXBeacon = Math.min(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.beaconX));
   let minX = Math.min(minXSensor, minXBeacon);
   let maxXSensor = Math.max(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.sensorX));
   let maxXBeacon = Math.max(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.beaconX));
   let maxX = Math.max(maxXSensor, maxXBeacon);
-  console.log(`There are ${maxX - minX} positions in line ${line}`);
-  let positionsOccupied = positionsOccupiedInLine(sensorsAndBeacons, line, minX, maxX);
+  return {
+    minX,
+    maxX,
+  };
+}
 
-  let solution = maxX - minX + 1 - positionsOccupied;
+function main() {
+  let sensorsAndBeacons = getSensorsAndBeacons();
+  let line = 10;
+  let { minX, maxX } = getMinAndMaxX(sensorsAndBeacons);
+  let linePositions = getOccupiedPositionsInLine(sensorsAndBeacons, line, minX, maxX);
+  let solution = linePositions.filter((position) => { position = true; }).length;
+
   console.log(`There are ${solution} positions that cannot contain beacons in line ${line}`);
 }
 
