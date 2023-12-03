@@ -14,19 +14,22 @@ function executeChallenge(year, day) {
   console.groupEnd();
 }
 
-if (year && day) {
+function executeYearChallenges(year, day) {
   console.group(year);
-  executeChallenge(year, day);
-  console.groupEnd();
-} else {
-  for (let year = 2022; year < new Date().getFullYear(); year++) {
-    console.group(year);
+  if (day) {
+    executeChallenge(year, day);
+  } else {
     for (let day = 1; day < 25; day++) {
       executeChallenge(year, day);
     }
-    console.groupEnd();
   }
+  console.groupEnd();
 }
 
-
-
+if (year) {
+  executeYearChallenges(year, day);
+} else {
+  for (let year = 2022; year < new Date().getFullYear(); year++) {
+    executeYearChallenges(year);
+  }
+}
