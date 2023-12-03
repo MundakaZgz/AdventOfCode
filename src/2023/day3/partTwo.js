@@ -21,7 +21,6 @@ module.exports = function () {
 
   function checkIfQualifiesForPartNumber(schematic, x, y) {
     const offsites = [-1, 0, 1];
-    let symbolsFound = [];
     for (let verticalOffsite of offsites) {
       for (let horizontalOffsite of offsites) {
         if(y+verticalOffsite >= 0 && y+verticalOffsite < schematic.length && x+horizontalOffsite >= 0 && x+horizontalOffsite < schematic[y+verticalOffsite].length) {
@@ -36,14 +35,12 @@ module.exports = function () {
 
   function getPartNumbers(schematic) {
     let partNumbers = new Set();
-    let gears = [];
     let qualifiesForPartNumber = false;
     let numberDetected = false;
     let number = 0;
 
     for (let i = 0; i < schematic.length; i++) {
       const line = schematic[i];
-      const offistes = [-1, 0, 1];
 
       for(let j = 0; j < line.length; j++) {
         if(isANumber(schematic[i][j])) {
@@ -57,7 +54,8 @@ module.exports = function () {
             // if we are at the end of the line, we add the number to the part numbers
             partNumbers.add({
               number,
-              qualifiesForPartNumber,
+              gearValue: qualifiesForPartNumber ? qualifiesForPartNumber.value : null,
+              position: qualifiesForPartNumber ? [qualifiesForPartNumber.x, qualifiesForPartNumber.y].join('-') : null,
             });
             // Reset conditions
             numberDetected = false;
@@ -104,7 +102,6 @@ module.exports = function () {
   
     const partNumbers = getPartNumbers(shematic);
     let gears = partNumbers.filter((partNumber) => partNumber.gearValue === '*');
-
     let groupedGears = groupGearsByPosition(gears);
 
     let gearRatios = 0;
