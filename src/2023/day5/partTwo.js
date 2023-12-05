@@ -104,7 +104,7 @@ module.exports = function () {
             }
         }
 
-        console.log(`The lower location is ${lowerLocation}`);
+        console.log(`The lowest location is ${lowerLocation}`);
 
     };
     
