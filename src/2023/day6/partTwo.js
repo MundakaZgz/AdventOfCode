@@ -10,7 +10,7 @@ module.exports = function () {
     }
 
     function extractNumbersFromLine(line) {
-        return line.split(' ').filter((x) => x.length > 0).slice(1).map(x => parseInt(x.trim()));
+        return parseInt(line.split(':')[1].replaceAll(' ',''));
     }
 
     function getTimeAndDistanceToBeat(data) {
@@ -23,7 +23,6 @@ module.exports = function () {
     }
 
     function calculateWaysToBreakTheRecord(time, distanceToBeat) {
-
         let waysToBreakTheRecord = 0;
         
         for (let keepingTime = 0; keepingTime < time; keepingTime++) {
@@ -39,13 +38,10 @@ module.exports = function () {
     const main = () => {
         let data = getData();
         let { time, distanceToBeat } = getTimeAndDistanceToBeat(data);
+    
+        let results = calculateWaysToBreakTheRecord(time, distanceToBeat);
 
-        let results = [];
-        for (let index = 0; index < time.length; index++) {
-            results.push(calculateWaysToBreakTheRecord(time[index], distanceToBeat[index]));
-        }
-
-        console.log(`The multiplication of the number of ways you could beat the record for each of the events is ${results.reduce((a, b) => a * b)}`);
+        console.log(`The ways to break the record are ${results}`);
     };
     
     main();
