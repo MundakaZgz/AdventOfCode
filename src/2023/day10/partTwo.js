@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { off } = require('process');
 
 module.exports = function () {
   
@@ -26,18 +25,30 @@ module.exports = function () {
   }
   
   function pipeComesFromNorth (pipeMap, row, col) {
+    if (row === 0) {
+      return false;
+    }
     return ['|','7','F'].includes(pipeMap[row-1][col].value);
   }
   
-  function pipeComesFromSouth (pipeMap, row, col) { 
+  function pipeComesFromSouth (pipeMap, row, col) {
+    if (row === pipeMap.length-1) {
+      return false;
+    }
     return ['L','J','|'].includes(pipeMap[row+1][col].value);
   }
   
   function pipeComesFromEast (pipeMap, row, col) {
+    if (col === pipeMap[row].length-1) {
+      return false;
+    }
     return ['7','-','J'].includes(pipeMap[row][col+1].value);
   }
   
   function pipeComesFromWest (pipeMap, row, col) {
+    if (col === 0) {
+      return false;
+    }
     return ['L','-','F'].includes(pipeMap[row][col-1].value);
   }
   
@@ -136,15 +147,60 @@ module.exports = function () {
     
     return steps;
   }
+
+  function getCleanMap(pipeMap, path) {
+    let cleanMap = Array(pipeMap.length).fill().map(() => 
+    Array(pipeMap[0].length).fill('.'));
   
+    for(let step=0; step<path.length; step++) {
+      cleanMap[path[step].row][path[step].col] = path[step].value;
+    }
+  
+    return cleanMap;
+  }
+
+  function countEnclosedTiles(cleanMap) {
+    let enclosedTiles = 0;
+    let isInternal = false;
+    let lastCorner = '';
+
+    for(let row=0; row<cleanMap.length; row++) {
+      for(let col=0; col<cleanMap[row].length; col++) {
+        switch (cleanMap[row][col]) {
+          case '.':
+            if(isInternal) enclosedTiles++;
+            break;
+          case '|':
+            isInternal = ! isInternal;   
+            break; 
+          case 'L':
+            lastCorner = 'L';
+            break;
+          case 'F':
+            lastCorner = 'F';
+            break;
+          case 'J':
+              if(lastCorner === 'F') isInternal = ! isInternal;
+              break;
+          case '7':
+            if(lastCorner === 'L') isInternal = ! isInternal;
+            break;
+        }
+      }
+    }
+  
+    return enclosedTiles;
+  }
+
   const main = () => {
     let data = getData();
     let pipeMap = getPipeMap(data);
     let startingPoint = getStartingPoint(pipeMap);
-    
     let path = getStepsFromStartingPoint(startingPoint, pipeMap);
-    
-    console.log(`The number of steps to the farthest point is ${path.length / 2}`);
+    let cleanMap = getCleanMap(pipeMap, path);
+    let enclosedTiles = countEnclosedTiles(cleanMap);
+  
+    console.log(`There are ${enclosedTiles} within the loop`);
   };
   
   main();
