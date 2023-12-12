@@ -54,16 +54,18 @@ module.exports = function () {
   }
   
   function addValueToLeafs(value, node) {
-    if(!node.left)
-    node.left = new Node(value);
-    else
-    addValueToLeafs(value, node.left);
-    
-    if(!node.right)
-    node.right = new Node(value);
-    else
-    addValueToLeafs(value, node.right);
-  }
+    if (!node.left) {
+        node.left = new Node(value === '?' ? '.' : value);
+    } else {
+        addValueToLeafs(value, node.left);
+    }
+
+    if (!node.right) {
+        node.right = new Node(value === '?' ? '#' : value);
+    } else {
+        addValueToLeafs(value, node.right);
+    }
+}
   
   function getPath(node, path, resultSet, validationFunction) {
     if(!node) return;
@@ -84,13 +86,9 @@ module.exports = function () {
     for(let i=1; i<configuration.length; i++) {
       addValueToLeafs(configuration[i], configTreeRoot);
     }
-    
-    console.log('Arbol creado')
-
+  
     let resultSet = new Set();
     getPath(configTreeRoot, '', resultSet, validationFunction);
-
-    console.log('Arbol recorrido')
     
     return  [...resultSet];
   }
@@ -101,13 +99,10 @@ module.exports = function () {
     let configurationsAndRecords = getConfigurationAndRecords(data);
     let arrangements = [];
     for(let i=0; i<configurationsAndRecords.configurations.length; i++) {
-      console.log(`Iteration ${i}`)
-      console.time(`Iteration ${i}`)
       let configuration = configurationsAndRecords.configurations[i];
       let records = configurationsAndRecords.records[i];
       let validationFunction = isValidArrangement(records);
       arrangements.push(getArrangements(configuration, validationFunction));
-      console.timeEnd(`Iteration ${i}`)
     }
     
     console.log(`The sum of all possible arrangements is ${arrangements.map((x) => x.length).reduce((a,b) => a+b, 0)}`)
