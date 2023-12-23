@@ -5,7 +5,7 @@ module.exports = function () {
   
   function getData() {
     const textFilePath = path.join(__dirname, 'test_input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const data = fs.readFileSync(textFilePath, 'utf8').split(/\n\n/);
     return data;
   }
   
@@ -65,28 +65,30 @@ module.exports = function () {
   }
   
   const main = () => {
-    let data = getData();
-    data.push('');
+    let patterns = getData();
+
+    console.log(patterns);
+
     
     let pattern = [];
     let numberOfColumnsToTheLeft = 0;
     let numberOfRowsAbove = 0;
     let numberOfPattern = 0;
     
-    for(const line of data) {
-      if(line === '') {
-        if(numberOfPattern % 2 == 0) {
-          numberOfColumnsToTheLeft += findMirrorIndexes(pattern).reduce((a, b) => a + b, 0);
-        } else {    
-          pattern = transposeMatrix(pattern);
-          numberOfRowsAbove += findMirrorIndexes(pattern).reduce((a, b) => a + b, 0);
-        }
-        pattern = [];
-        numberOfPattern++;
-      } else {
-        pattern.push(line);
-      }
-    }
+    // for(const line of data) {
+    //   if(line === '') {
+    //     if(numberOfPattern % 2 == 0) {
+    //       numberOfColumnsToTheLeft += findMirrorIndexes(pattern).reduce((a, b) => a + b, 0);
+    //     } else {    
+    //       pattern = transposeMatrix(pattern);
+    //       numberOfRowsAbove += findMirrorIndexes(pattern).reduce((a, b) => a + b, 0);
+    //     }
+    //     pattern = [];
+    //     numberOfPattern++;
+    //   } else {
+    //     pattern.push(line);
+    //   }
+    // }
     
     let result = numberOfColumnsToTheLeft + 100 * numberOfRowsAbove;
     
