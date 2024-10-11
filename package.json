@@ -9,8 +9,12 @@
     "eslint-plugin-import": "^2.28.1",
     "mocha": "^10.2.0"
   },
+  "dependencies": {
+    "promise-path": "*"
+  },
   "scripts": {
-    "start": "node --inspect index.js",
+    "start": "node index.js",
+    "debug": "node --inspect-brk index.js",
     "test": "mocha src/**/*.test.js",
     "lint": "npx eslint ."
   },

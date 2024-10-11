@@ -12,83 +12,61 @@ module.exports = function () {
   function findMirrorIndexes(matrix) {
     let possibleIndexes = [];
     
-    for(let i=0; i<matrix.length-1; i++) {
-      let row = matrix[i];
-      let rowArray = row.split('');
-      
-      let newPossibleIndexes = [];
-      for(let j=0; j<rowArray.length; j++) {
-        let thereIsMirror = true;
-        let distanceToMirror = Math.min(j, rowArray.length - j - 1);
-        
+    let thereIsMirror = true;
+    
+    for(row of matrix) {
+
+      for(let i=0; i<row.length; i++) {
+        let distanceToMirror = Math.min(Math.abs(i - 1), Math.abs(row.length - i - 1));
         if(distanceToMirror === 0) {
-          continue;
+            continue;
         }
-        
-        for(let k=0; k<distanceToMirror; k++) {
-          if(rowArray[j-k] !== rowArray[j+k+1]) {
+        for(let j=0; j<distanceToMirror; j++) {
+          if(row[i-j-1] !== row[j+i]) {
             thereIsMirror = false;
             break;
           }
         }
-        
         if(thereIsMirror) {
-          newPossibleIndexes.push(j);
+          console.log(`There is mirror in row ${row} at index ${i}`);
+          if(!possibleIndexes.includes(i+1)){
+            possibleIndexes.push(i+1);
+          }
+        } else {
+          possibleIndexes.splice(possibleIndexes.indexOf(i+1), 1);
         }
       }
-      
-      // Intersect newPossibleIndexes with possibleIndexes
-      if(i === 0) {
-        possibleIndexes = newPossibleIndexes;
-      } else {
-        possibleIndexes = possibleIndexes.filter(index => newPossibleIndexes.includes(index));
-      }
     }
-    
-    // update to 1-based index
-    possibleIndexes = possibleIndexes.map(index => index + 1);
     
     return possibleIndexes;
   }
   
   function transposeMatrix(matrix) {
-    let newMatrix = [];
-    newMatrix =  matrix.map(row => row.split(''));
-    newMatrix = newMatrix[0].map((col, i) => newMatrix.map(row => row[i]));
-    return newMatrix.map(row => row.join(''));
+    return matrix[0].map((col, i) => matrix.map(row => row[i]));
   }
   
   printMatrix = (matrix) => {
     for(const row of matrix) {
-      console.log(row);
+      console.log(row.join(''));
     }
   }
   
   const main = () => {
     let patterns = getData();
-
-    console.log(patterns);
-
-    
-    let pattern = [];
+  
     let numberOfColumnsToTheLeft = 0;
     let numberOfRowsAbove = 0;
     let numberOfPattern = 0;
     
-    // for(const line of data) {
-    //   if(line === '') {
-    //     if(numberOfPattern % 2 == 0) {
-    //       numberOfColumnsToTheLeft += findMirrorIndexes(pattern).reduce((a, b) => a + b, 0);
-    //     } else {    
-    //       pattern = transposeMatrix(pattern);
-    //       numberOfRowsAbove += findMirrorIndexes(pattern).reduce((a, b) => a + b, 0);
-    //     }
-    //     pattern = [];
-    //     numberOfPattern++;
-    //   } else {
-    //     pattern.push(line);
-    //   }
-    // }
+    for(const pattern of patterns) {
+      console.log(pattern);
+      const patternMatrix = pattern.split('\n').map(row => row.split(''));
+      printMatrix(patternMatrix);
+      let possibleIndexes = findMirrorIndexes(patternMatrix);
+      let possibleRowIndexes = findMirrorIndexes(transposeMatrix(patternMatrix));
+      console.log(possibleIndexes);
+      console.log(possibleRowIndexes);
+    }
     
     let result = numberOfColumnsToTheLeft + 100 * numberOfRowsAbove;
     
