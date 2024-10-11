@@ -47,7 +47,7 @@ async function copyTemplate () {
   // Session cookie is required to download the input data
   const options = {
     headers: {
-      Cookie: 'session=PUT YOUR SESSION COOKIE HERE'
+      Cookie: `session=${process.env.AOC_SESSION_COOKIE}`
     }
   }
   

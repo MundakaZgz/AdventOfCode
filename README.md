@@ -1,13 +1,14 @@
 # 🎄  Advent Of Code 🎄 
 In this repository I will try to fulfill all the challenges of [Advent of code](https://adventofcode.com)
 
-In order to prepare a new year of challenges there is the `prepareYear.py` utility that can be run using
-```
-python3 prepareYear.py
-```
-This utility will create a folder named after the current year with a folder inside for each of the days in the challenge.
+
+## Getting started
+1. Decide wether you want to program in local or in dev container
+2. Fill `AOC_SESSION_COOKIE` with your session cookie for AOC web.
+3. Run `npm run start [year] [day]`. It will run your solutions if present. Otherwise it will prepare the base code for that challenge and will download the input.txt file for it from AOC web.
 
 ## Challenge status per year
 |Year|Status|
 |---|---|
 |2022|In progress|
+|2023|In progress|
