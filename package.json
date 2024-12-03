@@ -13,7 +13,7 @@
     "promise-path": "*"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node --inspect index.js",
     "debug": "node --inspect-brk index.js",
     "test": "mocha src/**/*.test.js",
     "lint": "npx eslint ."

@@ -23,6 +23,7 @@ async function copyTemplate () {
 }
 
 async function start() {
+  console.log('Starting challenge for year', year, 'day', day);
   try {
     await executeChallenge(year, day);
   } catch (error) {
