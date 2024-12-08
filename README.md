@@ -12,3 +12,4 @@ In this repository I will try to fulfill all the challenges of [Advent of code](
 |---|---|
 |2022|In progress|
 |2023|In progress|
+|2024|In progress|
