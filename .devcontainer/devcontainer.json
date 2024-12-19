@@ -12,15 +12,12 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install",
+	"postCreateCommand": "npm install"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "node"
-
-	// Mount the host's .ssh directory into the container. More info: https://aka.ms/devcontainers-ssh.
-	"mounts": ["source=/path/to/.ssh,target=/.ssh,type=bind,consistency=cached"],
 
 }
