@@ -1,6 +1,5 @@
-const { assert } = require('console');
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 let uniquePaths = new Set()
 
 async function run() {
@@ -60,9 +59,40 @@ function getNumOfTrailsFromStartingPoint(map, startingPoint, x, y, visited) {
   }
 }
 
+function countDistinctTrails(map, x, y, currentHeight, visited) {
+  // Si está fuera de los límites o ya visitado, retorna 0
+  if (
+    x < 0 || y < 0 ||
+    x >= map[0].length || y >= map.length ||
+    visited[y][x]
+  ) {
+    return 0
+  }
+
+  if (parseInt(map[y][x]) !== currentHeight) {
+    return 0
+  }
+
+  // Si llega a altura 9, es un camino válido
+  if (currentHeight === 9) {
+    return 1
+  }
+
+  visited[y][x] = true
+  let total = 0
+
+  // Explora las 4 direcciones posibles
+  total += countDistinctTrails(map, x + 1, y, currentHeight + 1, visited)
+  total += countDistinctTrails(map, x - 1, y, currentHeight + 1, visited)
+  total += countDistinctTrails(map, x, y + 1, currentHeight + 1, visited)
+  total += countDistinctTrails(map, x, y - 1, currentHeight + 1, visited)
+
+  visited[y][x] = false // backtrack
+  return total
+}
+
 async function resolveFirstChallenge(input) {
   let map = input.split('\n').map((line) => line.split(''))
-  let score = 0
   let startingPoints = findStartingPoints(map)
   for(let i = 0; i < startingPoints.length; i++) {
     let visited = Array(map.length).fill(false).map(() => Array(map[0].length).fill(false))
@@ -73,7 +103,20 @@ async function resolveFirstChallenge(input) {
 }
 
 async function resolveSecondChallenge(input) {
-  console.log('Second challenge not implemented')
+  let map = input.split('\n').map((line) => line.split(''))
+  let rating = 0
+  let startingPoints = findStartingPoints(map)
+  for (let i = 0; i < startingPoints.length; i++) {
+    let visited = Array(map.length).fill(false).map(() => Array(map[0].length).fill(false))
+    rating += countDistinctTrails(
+      map,
+      startingPoints[i].x,
+      startingPoints[i].y,
+      0,
+      visited
+    )
+  }
+  console.log('The rating is', rating)
 }
 
 run()
