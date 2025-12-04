@@ -24,7 +24,6 @@ async function resolveFirstChallenge(input) {
     const [min, max] = line.split('-').map(v => parseInt(v, 10))
     for (let i = min; i <= max; i++) {
       if (isInvalidId(i)) {
-        console.log('Invalid ID found:', i)
         invalidIDsSum += i
       }
     }
@@ -33,8 +32,41 @@ async function resolveFirstChallenge(input) {
   console.log('Sum of all invalid IDs:', invalidIDsSum)
 }
 
+hasSequences = (id) => {
+  const strId = id.toString()
+  
+  for (let length = 1; length <= Math.floor(strId.length / 2); length++) {
+    if (strId.length % length !== 0) {
+      continue
+    }
+    
+    const substring = strId.slice(0, length)
+    const repetitions = strId.length / length
+    
+    const repeated = substring.repeat(repetitions)
+    if (repeated === strId) {
+      return true
+    }
+  }
+  
+  return false
+}
+
+
 async function resolveSecondChallenge(input) {
-  console.log('Second challenge not implemented')
+  let invalidIDsSum = 0
+  let ranges = input.split(',')
+
+  for (const line of ranges) {
+    const [min, max] = line.split('-').map(v => parseInt(v, 10))
+    for (let i = min; i <= max; i++) {
+      if (isInvalidId(i) || hasSequences(i)) {
+        invalidIDsSum += i
+      }
+    }
+  }
+
+  console.log('Sum of all invalid IDs:', invalidIDsSum)
 }
 
 run()
