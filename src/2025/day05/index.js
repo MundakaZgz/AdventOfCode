@@ -11,22 +11,16 @@ async function resolveFirstChallenge(input) {
   let lines = input.split('\n')
   let ranges = []
   let ids = []
-  let breakignLineFound = false
   let freshIngredients = 0
 
   for (const line of lines) {
     if (line.trim() === '') {
-      breakignLineFound = true
-      continue
+      break
     }
-    if (!breakignLineFound) {
-      ranges.push({
-        min: parseInt(line.split('-')[0], 10),
-        max: parseInt(line.split('-')[1], 10)
-      })
-    } else {
-      ids.push(parseInt(line, 10))
-    }
+    ranges.push({
+      min: parseInt(line.split('-')[0], 10),
+      max: parseInt(line.split('-')[1], 10)
+    })
   }
 
   for(id of ids) {
@@ -41,7 +35,40 @@ async function resolveFirstChallenge(input) {
 }
 
 async function resolveSecondChallenge(input) {
-  console.log('Second challenge not implemented')
+  let lines = input.split('\n')
+  let ranges = []
+
+  for (const line of lines) {
+    if (line.trim() === '') {
+      break
+    }
+    ranges.push({
+      min: parseInt(line.split('-')[0], 10),
+      max: parseInt(line.split('-')[1], 10)
+    })
+  }
+
+  ranges.sort((a, b) => a.min - b.min)
+
+  let mergedRanges = []
+  let currentRange = ranges[0]
+
+  for (let i = 1; i < ranges.length; i++) {
+    if (ranges[i].min <= currentRange.max + 1) {
+      currentRange.max = Math.max(currentRange.max, ranges[i].max)
+    } else {
+      mergedRanges.push(currentRange)
+      currentRange = ranges[i]
+    }
+  }
+  mergedRanges.push(currentRange)
+
+  let totalFreshIngredients = 0
+  for (const range of mergedRanges) {
+    totalFreshIngredients += (range.max - range.min + 1)
+  }
+
+  console.log('Number of fresh ingredients:', totalFreshIngredients)
 }
 
 run()
