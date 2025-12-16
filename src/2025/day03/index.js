@@ -29,7 +29,29 @@ async function resolveFirstChallenge(input) {
 }
 
 async function resolveSecondChallenge(input) {
-  console.log('Second challenge not implemented')
+  let totalOutput = 0
+  let banks = input.split('\n').map(line => line.split('').map(n => parseInt(n, 10)))
+
+  for (const bank of banks) {
+    const n = bank.length
+    let toRemove = n - 12
+    let stack = []
+
+    for(let battery of bank) {
+      while(stack.length > 0 && toRemove > 0 && stack[stack.length -1] < battery) {
+        stack.pop()
+        toRemove--
+      }
+      stack.push(battery)
+    }
+    if (toRemove > 0) {
+      stack = stack.slice(0, stack.length - toRemove)
+    }
+    const output = stack.slice(0, 12).join('')
+    totalOutput += parseInt(output, 10)
+  }
+
+  console.log('The total output is:', totalOutput)
 }
 
 run()
