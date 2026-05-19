@@ -17,7 +17,7 @@ Soluciones a los desafíos de [Advent of Code](https://adventofcode.com) en Java
 
 | Año | Días completados | Estado |
 |---|---|---|
-| 2022 | 25/25 | ✅ Completado |
+| 2022 | 15/25 | 🔄 En progreso |
 | 2023 | 13/25 | 🔄 En progreso |
 | 2024 | 11/25 | 🔄 En progreso |
 | 2025 | 0/25 | ⏳ Pendiente |
