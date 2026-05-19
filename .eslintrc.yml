@@ -1,13 +1,18 @@
-# env:
-#   browser: true
-#   commonjs: true
-#   es2021: true
-# extends: airbnb-base
-# parserOptions:
-#   ecmaVersion: latest
-# rules:
-#   global-require: off
-#   no-plusplus: off
-#   no-console: off
-#   import/no-dynamic-require: off
+env:
+  commonjs: true
+  es2021: true
+  node: true
+
+extends: airbnb-base
+
+parserOptions:
+  ecmaVersion: latest
+
+rules:
+  global-require: off
+  no-plusplus: off
+  no-console: off
+  import/no-dynamic-require: off
+  no-undef: error
+  no-unused-vars: warn
 

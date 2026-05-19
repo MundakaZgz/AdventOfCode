@@ -84,7 +84,7 @@ module.exports = function () {
       }
 
       queue = queue.filter((x) => x !== u);
-      
+
       const point = intToPoint(u);
       const neighbors = getNeighbors(point.x, point.y, map);
 

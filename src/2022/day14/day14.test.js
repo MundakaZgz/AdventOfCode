@@ -1,8 +1,7 @@
 const { describe, it } = require('node:test');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
-const { sandCanGoDown, 
-   } = require('./partOne');
+const { sandCanGoDown, sandCanGoDownLeft, sandCanGoDownRight } = require('./partOne');
 
 describe('sandCanGoDown', () => {
   it('returns true if the sand can go down', () => {
@@ -26,7 +25,7 @@ describe('sandCanGoDownLeft', () => {
     expect(sandCanGoDownLeft(map, sandUnitCoordinates)).to.equal(true);
   });
 
-  it('returns false if the sand can go down left', () => { 
+  it('returns false if the sand can go down left', () => {
     const map = new Set();
     map.add('499,1');
     const sandUnitCoordinates = { x: 500, y: 0 };

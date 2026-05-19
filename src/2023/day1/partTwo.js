@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function () {
-  
   function getData() {
     const textFilePath = path.join(__dirname, 'input.txt');
     const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
@@ -40,31 +39,29 @@ module.exports = function () {
     const match = [...remainingData.matchAll(digitRegex)];
     if (match.length > 0) {
       return dataToValues(match[0][0]);
-    } else {
-      return -1;
     }
+    return -1;
   }
 
   const main = () => {
     const data = getData();
-    
-    let values = [];
+
+    const values = [];
     for (const line of data) {
-      let firstDigit = dataToValues(getRecognizedDigitFromPosition(line, 0));
+      const firstDigit = dataToValues(getRecognizedDigitFromPosition(line, 0));
       let lastDigit;
       for (let i = 0; i < line.length; i++) {
-        if(getRecognizedDigitFromPosition(line, i) !== -1) {
+        if (getRecognizedDigitFromPosition(line, i) !== -1) {
           lastDigit = dataToValues(getRecognizedDigitFromPosition(line, i));
         }
       }
-      values.push(firstDigit * 10  + lastDigit);
+      values.push(firstDigit * 10 + lastDigit);
     }
 
     const result = values.reduce((acc, curr) => acc + curr, 0);
-    
+
     console.log(`The sum of all values is ${result}`);
   };
-  
+
   main();
 };
-

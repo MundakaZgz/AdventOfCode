@@ -81,11 +81,11 @@ module.exports = function () {
 
       const point = intToPoint(u);
       if (map[point.y][point.x] === 0) {
-          return dist[u];
+        return dist[u];
       }
 
       queue = queue.filter((x) => x !== u);
-      
+
       const neighbors = getNeighbors(point.x, point.y, map);
 
       for (const v of neighbors) {
@@ -98,7 +98,6 @@ module.exports = function () {
         }
       }
     }
-
   }
 
   const main = () => {

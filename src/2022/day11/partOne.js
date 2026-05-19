@@ -58,7 +58,7 @@ module.exports = function () {
       monkeys.map((x) => x.play(monkeys));
     }
 
-    times = monkeys.map((x) => x.itemsInspected).sort((a, b) => b - a);
+    const times = monkeys.map((x) => x.itemsInspected).sort((a, b) => b - a);
 
     console.log(`The product of the most inspected is ${times[0] * times[1]}`);
   };

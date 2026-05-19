@@ -8,16 +8,16 @@ module.exports = function () {
     const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
     return data;
   }
-  
+
   function main() {
     let score = 0;
     const data = getData();
     for (const game of data) {
-      [rival, whatShouldIDo] = game.split(' ');
+      const [rival, whatShouldIDo] = game.split(' ');
       score += utils.getPlayScoreFollowingStrategy(rival, whatShouldIDo);
     }
     console.log(`The final score is ${score}`);
   }
-  
+
   main();
 };

@@ -65,7 +65,7 @@ const getScore = (rival, me) => {
 const getPlayScore = (rival, me) => getScore(rival, me) + scorePerSelection[me];
 
 const getPlayScoreFollowingStrategy = (rival, whatShouldIDo) => {
-  myMove = strategiesPerRound[whatShouldIDo][rival];
+  const myMove = strategiesPerRound[whatShouldIDo][rival];
   return getPlayScore(rival, myMove);
 };
 

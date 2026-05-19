@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input_text.txt'), 'utf8').trim()
-  await resolveFirstChallenge(input)
-  await resolveSecondChallenge(input)
+  const input = fs.readFileSync(path.join(__dirname, 'input_text.txt'), 'utf8').trim();
+  await resolveFirstChallenge(input);
+  await resolveSecondChallenge(input);
 }
 
 // function isMirrorArray(arr) {
@@ -59,45 +59,44 @@ async function run() {
 // }
 
 function isMirrorArray(arr, index) {
-  let mirrored = true
-  let leftIndex = index
-  let rightIndex = index + 1
+  let mirrored = true;
+  let leftIndex = index;
+  let rightIndex = index + 1;
   while (leftIndex >= 0 && rightIndex < arr.length && mirrored) {
     if (arr[leftIndex] !== arr[rightIndex]) {
-      mirrored = false
+      mirrored = false;
     }
-    leftIndex--
-    rightIndex++
+    leftIndex--;
+    rightIndex++;
   }
-  return mirrored
+  return mirrored;
 }
 
 function findMirrorRowsAndColumns(matrix) {
 
 }
-  
 
 async function resolveFirstChallenge(input) {
-  let matrix = []
-  let result = 0
+  let matrix = [];
+  let result = 0;
 
-  for (line of input.split('\n')) {
+  for (const line of input.split('\n')) {
     if (line.length === 0) {
-      let mirrorResults = findMirrorRowsAndColumns(matrix)
-      for(let i=0;i++;i<mirrorResults.mirrorRows.length){
-        result += mirrorResults.mirrorColumns[i] + 100 * mirrorResults.mirrorRows[i]
+      const mirrorResults = findMirrorRowsAndColumns(matrix);
+      for (let i = 0; i++; i < mirrorResults.mirrorRows.length) {
+        result += mirrorResults.mirrorColumns[i] + 100 * mirrorResults.mirrorRows[i];
       }
-      matrix = []
+      matrix = [];
     } else {
-      matrix.push(line)
+      matrix.push(line);
     }
   }
 
-  console.log(`The number I get after summarizing all of your notes is ${result}`)
+  console.log(`The number I get after summarizing all of your notes is ${result}`);
 }
 
 async function resolveSecondChallenge(input) {
-  console.log('Second challenge not implemented')
+  console.log('Second challenge not implemented');
 }
 
-run()
+run();
