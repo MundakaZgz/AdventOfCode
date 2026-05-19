@@ -26,7 +26,7 @@ module.exports = function () {
 
       if (line.startsWith('seeds')) {
         const readingSeed = true;
-        const parsedSeeds = line.split(':')[1].trim().split(' ').map((x) => parseInt(x.trim()));
+        const parsedSeeds = line.split(':')[1].trim().split(' ').map((x) => parseInt(x.trim(, 10)));
         for (let j = 0; j < parsedSeeds.length; j += 2) {
           seeds.push({
             seedStart: parsedSeeds[j],
@@ -49,9 +49,9 @@ module.exports = function () {
         const matches = line.split(' ');
 
         dataBlocks[currentDataBlock].push({
-          destinationRangeStart: parseInt(matches[0]),
-          sourceRangeStart: parseInt(matches[1]),
-          rangeLength: parseInt(matches[2]),
+          destinationRangeStart: parseInt(matches[0], 10),
+          sourceRangeStart: parseInt(matches[1], 10),
+          rangeLength: parseInt(matches[2], 10),
         });
       }
     }

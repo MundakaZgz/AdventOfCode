@@ -19,7 +19,7 @@ function initDisk(input) {
   const disk = [];
   let fileId = 0;
   for (let i = 0; i < input.length; i++) {
-    for (let j = 0; j < parseInt(input[i]); j++) {
+    for (let j = 0; j < parseInt(input[i], 10); j++) {
       if (writtingData) {
         disk.push({
           id: fileId,
@@ -90,7 +90,7 @@ function alternativeInit(input) {
       id++;
     }
     disk.push({
-      slots: parseInt(input[i]),
+      slots: parseInt(input[i], 10),
       id: idValue,
     });
   }
@@ -129,20 +129,6 @@ function alternativeDefrag(disk) {
 
   return disk;
 }
-
-// function diskToString(disk) {
-//   let diskString = ''
-//   for (let i = 0; i < disk.length; i++) {
-//     for (let j = 0; j < disk[i].slots; j++) {
-//       diskString += disk[i].id
-//     }
-//   }
-//   return diskString
-// }
-
-// function printDisk(disk) {
-//   console.log(diskToString(disk))
-// }
 
 async function resolveSecondChallenge(input) {
   const disk = alternativeInit(input);

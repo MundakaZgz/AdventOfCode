@@ -13,7 +13,7 @@ async function resolveFirstChallenge(input) {
   console.log(`The dial starts pointing at ${dial}`);
   for (const line of input.split('\n')) {
     const direction = line[0];
-    const value = parseInt(line.slice(1), 10);
+    const value = parseInt(line.slice(1, 10), 10);
     if (direction === 'L') {
       dial -= value;
     } else if (direction === 'R') {
@@ -40,7 +40,7 @@ async function resolveSecondChallenge(input) {
   console.log(`The dial starts pointing at ${dial}`);
   for (const line of input.split('\n')) {
     const direction = line[0];
-    let value = parseInt(line.slice(1), 10);
+    let value = parseInt(line.slice(1, 10), 10);
     let timesAt0 = 0;
 
     if (value > 100) {

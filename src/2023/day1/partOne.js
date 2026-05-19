@@ -16,8 +16,8 @@ module.exports = function () {
 
     for (const line of data) {
       const match = line.match(digitRegex);
-      const firstDigit = parseInt(match[0]);
-      const lastDigit = parseInt(match[match.length - 1]);
+      const firstDigit = parseInt(match[0], 10);
+      const lastDigit = parseInt(match[match.length - 1], 10);
       values.push(firstDigit * 10 + lastDigit);
     }
 

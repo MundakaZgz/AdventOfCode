@@ -13,9 +13,9 @@ module.exports = function () {
     const regRed = /(\d+) red/g;
     const regBlue = /(\d+) blue/g;
 
-    const numberOfGreens = [...data.matchAll(regGreen)].map((match) => parseInt(match[1]));
-    const numberOfReds = [...data.matchAll(regRed)].map((match) => parseInt(match[1]));
-    const numberOfBlues = [...data.matchAll(regBlue)].map((match) => parseInt(match[1]));
+    const numberOfGreens = [...data.matchAll(regGreen)].map((match) => parseInt(match[1], 10));
+    const numberOfReds = [...data.matchAll(regRed)].map((match) => parseInt(match[1], 10));
+    const numberOfBlues = [...data.matchAll(regBlue)].map((match) => parseInt(match[1], 10));
 
     return { numberOfGreens, numberOfReds, numberOfBlues };
   }
@@ -23,7 +23,7 @@ module.exports = function () {
   function getGameNumber(data) {
     const reg = /Game (\d+):/g;
     const match = [...data.matchAll(reg)];
-    return parseInt(match[0][1]);
+    return parseInt(match[0][1], 10);
   }
 
   const main = () => {

@@ -31,8 +31,8 @@ const extractListOfPointsFromSegment = (segment) => {
   const regex = /(\d+),(\d+)/g;
   let match;
   while ((match = regex.exec(segment)) !== null) {
-    const x = parseInt(match[1]);
-    const y = parseInt(match[2]);
+    const x = parseInt(match[1], 10);
+    const y = parseInt(match[2], 10);
     points.push({ x, y });
   }
   return points;

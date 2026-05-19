@@ -30,7 +30,7 @@ function isPossibleToCalculateWithAThirdOperator(solution, values) {
     for (let j = 0; j < calculations.length; j++) {
       updatedCalculations.push(calculations[j] + values[i]);
       updatedCalculations.push(calculations[j] * values[i]);
-      updatedCalculations.push(parseInt(String(calculations[j]) + String(values[i])));
+      updatedCalculations.push(parseInt(String(calculations[j]) + String(values[i]), 10));
     }
     calculations = updatedCalculations;
   }
@@ -40,8 +40,8 @@ function isPossibleToCalculateWithAThirdOperator(solution, values) {
 
 async function resolveFirstChallenge(input) {
   const equations = input.split('\n');
-  const solutions = equations.map((x) => x.split(': ')[0]).map((x) => parseInt(x));
-  const values = equations.map((x) => x.split(': ')[1].split(' ')).map((x) => x.map((y) => parseInt(y)));
+  const solutions = equations.map((x) => x.split(': ')[0]).map((x) => parseInt(x, 10));
+  const values = equations.map((x) => x.split(': ')[1].split(' ')).map((x) => x.map((y) => parseInt(y, 10)));
 
   let result = 0;
 
@@ -56,8 +56,8 @@ async function resolveFirstChallenge(input) {
 
 async function resolveSecondChallenge(input) {
   const equations = input.split('\n');
-  const solutions = equations.map((x) => x.split(': ')[0]).map((x) => parseInt(x));
-  const values = equations.map((x) => x.split(': ')[1].split(' ')).map((x) => x.map((y) => parseInt(y)));
+  const solutions = equations.map((x) => x.split(': ')[0]).map((x) => parseInt(x, 10));
+  const values = equations.map((x) => x.split(': ')[1].split(' ')).map((x) => x.map((y) => parseInt(y, 10)));
 
   let result = 0;
 

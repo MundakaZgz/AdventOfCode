@@ -13,9 +13,9 @@ module.exports = function () {
     const regRed = /(\d+) red/g;
     const regBlue = /(\d+) blue/g;
 
-    const numberOfGreens = [...data.matchAll(regGreen)].map((match) => parseInt(match[1]));
-    const numberOfReds = [...data.matchAll(regRed)].map((match) => parseInt(match[1]));
-    const numberOfBlues = [...data.matchAll(regBlue)].map((match) => parseInt(match[1]));
+    const numberOfGreens = [...data.matchAll(regGreen)].map((match) => parseInt(match[1], 10));
+    const numberOfReds = [...data.matchAll(regRed)].map((match) => parseInt(match[1], 10));
+    const numberOfBlues = [...data.matchAll(regBlue)].map((match) => parseInt(match[1], 10));
 
     return { numberOfGreens, numberOfReds, numberOfBlues };
   }

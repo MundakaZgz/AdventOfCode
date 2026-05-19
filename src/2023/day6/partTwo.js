@@ -9,7 +9,7 @@ module.exports = function () {
   }
 
   function extractNumbersFromLine(line) {
-    return parseInt(line.split(':')[1].replaceAll(' ', ''));
+    return parseInt(line.split(':')[1].replaceAll(' ', ''), 10);
   }
 
   function getTimeAndDistanceToBeat(data) {

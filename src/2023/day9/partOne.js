@@ -9,7 +9,7 @@ module.exports = function () {
   }
 
   function getCleanHistory(line) {
-    return [line.split(' ').map((x) => parseInt(x.trim()))];
+    return [line.split(' ').map((x) => parseInt(x.trim(, 10)))];
   }
 
   function calculateDifferences(history) {

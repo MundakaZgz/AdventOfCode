@@ -29,7 +29,7 @@ module.exports = function () {
       case 'nine':
         return 9;
       default:
-        return parseInt(data);
+        return parseInt(data, 10);
     }
   }
 

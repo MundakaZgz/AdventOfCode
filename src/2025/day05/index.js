@@ -18,8 +18,8 @@ async function resolveFirstChallenge(input) {
       break;
     }
     ranges.push({
-      min: parseInt(line.split('-')[0], 10),
-      max: parseInt(line.split('-')[1], 10),
+      min: parseInt(line.split('-', 10)[0], 10),
+      max: parseInt(line.split('-', 10)[1], 10),
     });
   }
 
@@ -43,8 +43,8 @@ async function resolveSecondChallenge(input) {
       break;
     }
     ranges.push({
-      min: parseInt(line.split('-')[0], 10),
-      max: parseInt(line.split('-')[1], 10),
+      min: parseInt(line.split('-', 10)[0], 10),
+      max: parseInt(line.split('-', 10)[1], 10),
     });
   }
 

@@ -16,7 +16,7 @@ module.exports = function () {
 
     for (let row = 0; row < data.length; row++) {
       const configuration = data[row].split(' ')[0].split('');
-      const record = data[row].split(' ')[1].split(',').map((record) => parseInt(record));
+      const record = data[row].split(' ')[1].split(',').map((record) => parseInt(record, 10));
       output.configurations.push(configuration);
       output.records.push(record);
     }

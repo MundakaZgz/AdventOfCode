@@ -49,7 +49,7 @@ async function resolveFirstChallenge(input) {
   const correctUpdates = updates.filter((update) => isOrdered(update, orderingRules));
   let sumOfMiddlePages = 0;
   for (let i = 0; i < correctUpdates.length; i++) {
-    sumOfMiddlePages += parseInt(correctUpdates[i][Math.floor(correctUpdates[i].length / 2)]);
+    sumOfMiddlePages += parseInt(correctUpdates[i][Math.floor(correctUpdates[i].length / 2)], 10);
   }
 
   console.log(`The sum of all middle updates is ${sumOfMiddlePages}`);
@@ -65,7 +65,7 @@ async function resolveSecondChallenge(input) {
 
   let sumOfMiddlePages = 0;
   for (let i = 0; i < orderedIncorrectUpdates.length; i++) {
-    sumOfMiddlePages += parseInt(orderedIncorrectUpdates[i][Math.floor(orderedIncorrectUpdates[i].length / 2)]);
+    sumOfMiddlePages += parseInt(orderedIncorrectUpdates[i][Math.floor(orderedIncorrectUpdates[i].length / 2)], 10);
   }
 
   console.log(`The sum of all middle updates is ${sumOfMiddlePages}`);

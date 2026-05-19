@@ -11,7 +11,7 @@ module.exports = function () {
 
   function getConfigurationAndRecords(line) {
     const configuration = line.split(' ')[0];
-    const record = line.split(' ')[1].split(',').map((record) => parseInt(record));
+    const record = line.split(' ')[1].split(',').map((record) => parseInt(record, 10));
 
     return [configuration, record];
   }

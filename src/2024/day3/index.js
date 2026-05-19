@@ -13,7 +13,7 @@ async function resolveFirstChallenge(input) {
   let result = 0;
   for (let i = 0; i < instructions.length; i++) {
     const instruction = instructions[i].replace('mul(', '').replace(')', '').split(',');
-    result += parseInt(instruction[0]) * parseInt(instruction[1]);
+    result += parseInt(instruction[0], 10) * parseInt(instruction[1], 10);
   }
   console.log(`First challenge result: ${result}`);
 }
@@ -34,7 +34,7 @@ async function resolveSecondChallenge(input) {
     }
     if (!mulEnabled) continue;
     const instruction = instructions[i].replace('mul(', '').replace(')', '').split(',');
-    result += parseInt(instruction[0]) * parseInt(instruction[1]);
+    result += parseInt(instruction[0], 10) * parseInt(instruction[1], 10);
   }
   console.log(`Second challenge result: ${result}`);
 }

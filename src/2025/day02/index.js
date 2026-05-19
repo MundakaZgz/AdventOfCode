@@ -50,7 +50,7 @@ function hasSequences(id) {
   }
 
   return false;
-};
+}
 
 async function resolveSecondChallenge(input) {
   let invalidIDsSum = 0;

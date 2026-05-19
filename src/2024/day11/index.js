@@ -10,8 +10,8 @@ async function run() {
 
 function blink(currentValue) {
   if (currentValue === '0') return '1';
-  if (currentValue.length % 2 === 0) return `${String(parseInt(currentValue.substring(0, currentValue.length / 2)))} ${String(parseInt(currentValue.substring(currentValue.length / 2)))}`;
-  return String(parseInt(currentValue) * 2024);
+  if (currentValue.length % 2 === 0) return `${String(parseInt(currentValue.substring(0, currentValue.length / 2), 10))} ${String(parseInt(currentValue.substring(currentValue.length / 2), 10))}`;
+  return String(parseInt(currentValue, 10) * 2024);
 }
 
 function resolveFirstChallenge(input) {

@@ -13,7 +13,7 @@ module.exports = function () {
     const lineParts = cleanLine.split(':');
     const numberGroups = lineParts[1].split('|').map((group) => group.trim().split(' '));
     return {
-      cardNumber: parseInt(lineParts[0].split(' ')[1]),
+      cardNumber: parseInt(lineParts[0].split(' ')[1], 10),
       myNumbers: numberGroups[0],
       winningNumbers: numberGroups[1],
     };

@@ -26,7 +26,7 @@ function getNumOfTrailsFromStartingPoint(map, startingPoint, x, y, visited) {
     return;
   }
 
-  const currentHeight = parseInt(map[y][x]);
+  const currentHeight = parseInt(map[y][x], 10);
 
   if (visited[y][x]) {
     return;
@@ -40,22 +40,22 @@ function getNumOfTrailsFromStartingPoint(map, startingPoint, x, y, visited) {
   visited[y][x] = true;
 
   // check x + 1
-  if (x + 1 < map[0].length && parseInt(map[y][x + 1]) === currentHeight + 1) {
+  if (x + 1 < map[0].length && parseInt(map[y][x + 1], 10) === currentHeight + 1) {
     getNumOfTrailsFromStartingPoint(map, startingPoint, x + 1, y, visited);
   }
 
   // check x - 1
-  if (x - 1 >= 0 && parseInt(map[y][x - 1]) === currentHeight + 1) {
+  if (x - 1 >= 0 && parseInt(map[y][x - 1], 10) === currentHeight + 1) {
     getNumOfTrailsFromStartingPoint(map, startingPoint, x - 1, y, visited);
   }
 
   // check y + 1
-  if (y + 1 < map.length && parseInt(map[y + 1][x]) === currentHeight + 1) {
+  if (y + 1 < map.length && parseInt(map[y + 1][x], 10) === currentHeight + 1) {
     getNumOfTrailsFromStartingPoint(map, startingPoint, x, y + 1, visited);
   }
 
   // check y - 1
-  if (y - 1 >= 0 && parseInt(map[y - 1][x]) === currentHeight + 1) {
+  if (y - 1 >= 0 && parseInt(map[y - 1][x], 10) === currentHeight + 1) {
     getNumOfTrailsFromStartingPoint(map, startingPoint, x, y - 1, visited);
   }
 }
@@ -70,7 +70,7 @@ function countDistinctTrails(map, x, y, currentHeight, visited) {
     return 0;
   }
 
-  if (parseInt(map[y][x]) !== currentHeight) {
+  if (parseInt(map[y][x], 10) !== currentHeight) {
     return 0;
   }
 

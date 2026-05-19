@@ -67,7 +67,7 @@ module.exports = function () {
       case 'A':
         return 14;
       default:
-        return parseInt(card);
+        return parseInt(card, 10);
     }
   }
 

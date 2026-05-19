@@ -23,7 +23,7 @@ module.exports = function () {
   };
 
   const updateScreen = (screen, X, cycle) => {
-    const row = parseInt((cycle - 1) / COLS);
+    const row = parseInt((cycle - 1) / COLS, 10);
     const col = (cycle - 1) % COLS;
 
     screen[row][col] = getPixel(cycle, X);

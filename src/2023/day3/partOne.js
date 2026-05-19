@@ -45,7 +45,7 @@ module.exports = function () {
       for (let j = 0; j < line.length; j++) {
         if (isANumber(schematic[i][j])) {
           numberDetected = true;
-          number = number * 10 + parseInt(schematic[i][j]);
+          number = number * 10 + parseInt(schematic[i][j], 10);
           // if the number was not qualified for a part number, check if it qualifies now
           if (!qualifiesForPartNumber) {
             qualifiesForPartNumber = checkIfQualifiesForPartNumber(schematic, i, j);
