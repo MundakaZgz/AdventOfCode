@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Advent of code",
   "devDependencies": {
-    "chai": "^4.3.7",
+    "chai": "^6.2.2",
     "eslint": "^8.47.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.28.1",
