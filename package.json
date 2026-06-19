@@ -4,7 +4,7 @@
   "description": "Advent of code",
   "devDependencies": {
     "chai": "^6.2.2",
-    "eslint": "^10.4.1",
+    "eslint": "^10.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.32.0",
     "mocha": "^11.7.6"
