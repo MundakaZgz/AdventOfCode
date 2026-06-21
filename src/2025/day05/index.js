@@ -1,25 +1,27 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
 
 async function resolveFirstChallenge(input) {
-  const lines = input.split('\n');
+  const lines = input.split("\n");
   const ranges = [];
   const ids = [];
   let freshIngredients = 0;
 
   for (const line of lines) {
-    if (line.trim() === '') {
+    if (line.trim() === "") {
       break;
     }
     ranges.push({
-      min: parseInt(line.split('-', 10)[0], 10),
-      max: parseInt(line.split('-', 10)[1], 10),
+      min: parseInt(line.split("-", 10)[0], 10),
+      max: parseInt(line.split("-", 10)[1], 10),
     });
   }
 
@@ -31,20 +33,20 @@ async function resolveFirstChallenge(input) {
       }
     }
   }
-  console.log('Number of fresh ingredients:', freshIngredients);
+  console.log("Number of fresh ingredients:", freshIngredients);
 }
 
 async function resolveSecondChallenge(input) {
-  const lines = input.split('\n');
+  const lines = input.split("\n");
   const ranges = [];
 
   for (const line of lines) {
-    if (line.trim() === '') {
+    if (line.trim() === "") {
       break;
     }
     ranges.push({
-      min: parseInt(line.split('-', 10)[0], 10),
-      max: parseInt(line.split('-', 10)[1], 10),
+      min: parseInt(line.split("-", 10)[0], 10),
+      max: parseInt(line.split("-", 10)[1], 10),
     });
   }
 
@@ -65,10 +67,10 @@ async function resolveSecondChallenge(input) {
 
   let totalFreshIngredients = 0;
   for (const range of mergedRanges) {
-    totalFreshIngredients += (range.max - range.min + 1);
+    totalFreshIngredients += range.max - range.min + 1;
   }
 
-  console.log('Number of fresh ingredients:', totalFreshIngredients);
+  console.log("Number of fresh ingredients:", totalFreshIngredients);
 }
 
 run();

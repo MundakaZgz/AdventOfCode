@@ -1,18 +1,20 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
 
 function extractFirstAndRight(input) {
-  const lines = input.split('\n');
+  const lines = input.split("\n");
   const left = [];
   const right = [];
   for (let i = 0; i < lines.length; i++) {
-    const numbers = lines[i].split(' ');
+    const numbers = lines[i].split(" ");
     left.push(numbers[0]);
     right.push(numbers[numbers.length - 1]);
   }
@@ -29,7 +31,10 @@ async function resolveFirstChallenge(input) {
     distances.push(Math.abs(left[i] - right[i]));
   }
 
-  console.log('The sun of the distances is:', distances.reduce((a, b) => a + b, 0));
+  console.log(
+    "The sun of the distances is:",
+    distances.reduce((a, b) => a + b, 0),
+  );
 }
 
 async function resolveSecondChallenge(input) {
@@ -41,7 +46,10 @@ async function resolveSecondChallenge(input) {
     distances.push(left[i] * count);
   }
 
-  console.log('The sun of the distances is:', distances.reduce((a, b) => a + b, 0));
+  console.log(
+    "The sun of the distances is:",
+    distances.reduce((a, b) => a + b, 0),
+  );
 }
 
 run();

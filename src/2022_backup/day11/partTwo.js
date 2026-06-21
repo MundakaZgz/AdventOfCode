@@ -1,14 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
+  const textFilePath = path.join(__dirname, "input.txt");
   const ROUNDS = 10_000;
 
   const readData = () => {
-    const data = fs
-      .readFileSync(textFilePath, 'utf-8')
-      .split(/\r?\n/);
+    const data = fs.readFileSync(textFilePath, "utf-8").split(/\r?\n/);
 
     return data;
   };
@@ -46,21 +44,42 @@ module.exports = function () {
     let id = 0;
 
     data.forEach((line) => {
-      if (line.startsWith('  Starting items:')) {
-        foundItems = line.substring(line.indexOf(':') + 1).split(',').map((x) => Number(x));
+      if (line.startsWith("  Starting items:")) {
+        foundItems = line
+          .substring(line.indexOf(":") + 1)
+          .split(",")
+          .map((x) => Number(x));
       }
-      if (line.startsWith('  Operation:')) {
-        foundOperation = new Function('old', `return ${line.substring(line.indexOf('=') + 1)}`);
+      if (line.startsWith("  Operation:")) {
+        foundOperation = new Function(
+          "old",
+          `return ${line.substring(line.indexOf("=") + 1)}`,
+        );
       }
-      if (line.startsWith('  Test:')) {
-        foundDivisibleBy = Number(line.match(/ {2}Test: divisible by (\d+)/)[1]);
+      if (line.startsWith("  Test:")) {
+        foundDivisibleBy = Number(
+          line.match(/ {2}Test: divisible by (\d+)/)[1],
+        );
       }
-      if (line.startsWith('    If true:')) {
-        foundMonkeyToIfTrue = Number(line.match(/ {4}If true: throw to monkey (\d+)/)[1]);
+      if (line.startsWith("    If true:")) {
+        foundMonkeyToIfTrue = Number(
+          line.match(/ {4}If true: throw to monkey (\d+)/)[1],
+        );
       }
-      if (line.startsWith('    If false:')) {
-        foundmonkeyToIfFalse = Number(line.match(/ {4}If false: throw to monkey (\d+)/)[1]);
-        monkeys.push(new Monkey(id, foundItems, foundOperation, foundDivisibleBy, foundMonkeyToIfTrue, foundmonkeyToIfFalse));
+      if (line.startsWith("    If false:")) {
+        foundmonkeyToIfFalse = Number(
+          line.match(/ {4}If false: throw to monkey (\d+)/)[1],
+        );
+        monkeys.push(
+          new Monkey(
+            id,
+            foundItems,
+            foundOperation,
+            foundDivisibleBy,
+            foundMonkeyToIfTrue,
+            foundmonkeyToIfFalse,
+          ),
+        );
         id++;
       }
     });
@@ -75,7 +94,14 @@ module.exports = function () {
   };
 
   class Monkey {
-    constructor(id, list, operation, divisibleBy, monkeyToIFTrue, monkeyToIfFalse) {
+    constructor(
+      id,
+      list,
+      operation,
+      divisibleBy,
+      monkeyToIFTrue,
+      monkeyToIfFalse,
+    ) {
       this.id = id;
       this.list = list;
       this.operation = operation;
@@ -85,7 +111,10 @@ module.exports = function () {
       this.itemsInspected = 0;
     }
 
-    sendTo = (item) => (item % this.divisibleBy === 0 ? this.monkeyToIFTrue : this.monkeyToIfFalse);
+    sendTo = (item) =>
+      item % this.divisibleBy === 0
+        ? this.monkeyToIFTrue
+        : this.monkeyToIfFalse;
 
     play = (monkeys) => {
       const numberOfItems = this.list.length;

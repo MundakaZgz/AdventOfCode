@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
+  const textFilePath = path.join(__dirname, "input.txt");
 
   const readData = () => {
     const data = fs
-      .readFileSync(textFilePath, 'utf-8')
+      .readFileSync(textFilePath, "utf-8")
       .split(/\r?\n/)
-      .map((row) => row.split(' '));
+      .map((row) => row.split(" "));
 
     return data;
   };
@@ -25,7 +25,7 @@ module.exports = function () {
       }
       cycle += 1;
 
-      if (operation == 'addx') {
+      if (operation == "addx") {
         if (cycle % 40 == 20) {
           total += cycle * X;
         }

@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
@@ -19,27 +19,30 @@ module.exports = function () {
 
   function buildFilesystem(input) {
     const relevantInput = input.filter(
-      (command) => !command.startsWith('dir') && !command.startsWith('$ ls'),
+      (command) => !command.startsWith("dir") && !command.startsWith("$ ls"),
     );
 
-    const filesystem = new Directory('/', null);
+    const filesystem = new Directory("/", null);
 
     let workingDirectory = null;
     for (const command of relevantInput) {
-      if (command.startsWith('$ cd')) {
-        const [, , newDirectoryLabel] = command.split(' ');
+      if (command.startsWith("$ cd")) {
+        const [, , newDirectoryLabel] = command.split(" ");
 
-        if (newDirectoryLabel === '/') {
+        if (newDirectoryLabel === "/") {
           workingDirectory = filesystem;
-        } else if (newDirectoryLabel === '..') {
+        } else if (newDirectoryLabel === "..") {
           workingDirectory = workingDirectory.parent;
         } else {
-          const newDirectory = new Directory(newDirectoryLabel, workingDirectory);
+          const newDirectory = new Directory(
+            newDirectoryLabel,
+            workingDirectory,
+          );
           workingDirectory.children.push(newDirectory);
           workingDirectory = newDirectory;
         }
       } else {
-        const [filesize] = command.split(' ');
+        const [filesize] = command.split(" ");
 
         let current = workingDirectory;
         while (current.parent) {
@@ -72,7 +75,9 @@ module.exports = function () {
       if (directory.size >= requiredSpace) candidates.push(directory);
     });
 
-    const selectedFolder = Math.min(...candidates.map((candidate) => candidate.size));
+    const selectedFolder = Math.min(
+      ...candidates.map((candidate) => candidate.size),
+    );
 
     console.log(`The folder you have to delete is ${selectedFolder}`);
   }

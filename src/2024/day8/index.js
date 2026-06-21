@@ -1,21 +1,27 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
 
 async function resolveFirstChallenge(input) {
-  const map = input.split('\n').map((line) => line.split(''));
+  const map = input.split("\n").map((line) => line.split(""));
   const signals = collectSignals(map);
 
   for (const signal in signals) {
     for (let antennaA = 0; antennaA < signals[signal].length; antennaA++) {
       for (let antennaB = 0; antennaB < signals[signal].length; antennaB++) {
         if (antennaA !== antennaB) {
-          calculateAntinode(map, signals[signal][antennaA], signals[signal][antennaB]);
+          calculateAntinode(
+            map,
+            signals[signal][antennaA],
+            signals[signal][antennaB],
+          );
         }
       }
     }
@@ -24,20 +30,20 @@ async function resolveFirstChallenge(input) {
   let antinodes = 0;
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
-      if (map[i][j] === '#') {
+      if (map[i][j] === "#") {
         antinodes++;
       }
     }
   }
 
-  console.log('The number of antinodes is', antinodes);
+  console.log("The number of antinodes is", antinodes);
 }
 
 function collectSignals(map) {
   const signals = {};
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
-      if (map[i][j] !== '.') {
+      if (map[i][j] !== ".") {
         if (!signals[map[i][j]]) {
           signals[map[i][j]] = [];
         }
@@ -54,9 +60,14 @@ function calculateAntinode(map, antennaA, antennaB, infinite = false) {
       x: antennaB.x + antennaB.x - antennaA.x,
       y: antennaB.y + antennaB.y - antennaA.y,
     };
-    if (antinode.y >= 0 && antinode.y < map.length && antinode.x >= 0 && antinode.x < map[0].length) {
-      if (map[antinode.y][antinode.x] === '.') {
-        map[antinode.y][antinode.x] = '#';
+    if (
+      antinode.y >= 0 &&
+      antinode.y < map.length &&
+      antinode.x >= 0 &&
+      antinode.x < map[0].length
+    ) {
+      if (map[antinode.y][antinode.x] === ".") {
+        map[antinode.y][antinode.x] = "#";
       }
       antennaA = antennaB;
       antennaB = antinode;
@@ -67,14 +78,19 @@ function calculateAntinode(map, antennaA, antennaB, infinite = false) {
 }
 
 async function resolveSecondChallenge(input) {
-  const map = input.split('\n').map((line) => line.split(''));
+  const map = input.split("\n").map((line) => line.split(""));
   const signals = collectSignals(map);
 
   for (const signal in signals) {
     for (let antennaA = 0; antennaA < signals[signal].length; antennaA++) {
       for (let antennaB = 0; antennaB < signals[signal].length; antennaB++) {
         if (antennaA !== antennaB) {
-          calculateAntinode(map, signals[signal][antennaA], signals[signal][antennaB], true);
+          calculateAntinode(
+            map,
+            signals[signal][antennaA],
+            signals[signal][antennaB],
+            true,
+          );
         }
       }
     }
@@ -83,13 +99,13 @@ async function resolveSecondChallenge(input) {
   let antinodes = 0;
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
-      if (map[i][j] !== '.') {
+      if (map[i][j] !== ".") {
         antinodes++;
       }
     }
   }
 
-  console.log('The number of antinodes is', antinodes);
+  console.log("The number of antinodes is", antinodes);
 }
 
 run();

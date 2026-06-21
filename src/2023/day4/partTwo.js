@@ -1,19 +1,21 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
   function getCardsInfo(line) {
-    const cleanLine = line.replaceAll(/\s+/g, ' ');
-    const lineParts = cleanLine.split(':');
-    const numberGroups = lineParts[1].split('|').map((group) => group.trim().split(' '));
+    const cleanLine = line.replaceAll(/\s+/g, " ");
+    const lineParts = cleanLine.split(":");
+    const numberGroups = lineParts[1]
+      .split("|")
+      .map((group) => group.trim().split(" "));
     return {
-      cardNumber: parseInt(lineParts[0].split(' ')[1], 10),
+      cardNumber: parseInt(lineParts[0].split(" ")[1], 10),
       myNumbers: numberGroups[0],
       winningNumbers: numberGroups[1],
     };
@@ -36,7 +38,10 @@ module.exports = function () {
     cards.forEach((card) => {
       const score = getScore(card);
       cardDeck.push({
-        cardNumber: card.cardNumber, score, scratched: 0, available: 1,
+        cardNumber: card.cardNumber,
+        score,
+        scratched: 0,
+        available: 1,
       });
     });
     return cardDeck;
@@ -70,7 +75,9 @@ module.exports = function () {
       }
     }
 
-    console.log(`The number of scratched cards is ${cardDeck.reduce((a, b) => a + b.scratched, 0)}`);
+    console.log(
+      `The number of scratched cards is ${cardDeck.reduce((a, b) => a + b.scratched, 0)}`,
+    );
   };
 
   main();

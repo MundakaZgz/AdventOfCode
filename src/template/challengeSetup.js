@@ -1,28 +1,27 @@
-import path from 'path';
-import fs from 'node:fs';
-import https from 'https';
-import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
+import path from "path";
+import fs from "node:fs";
+import https from "https";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
 
 async function copyTemplate() {
   const year = process.argv[2];
   const day = process.argv[3];
 
-
   dotenv.config();
 
   if (!year) {
-    console.error('Please specify a year');
+    console.error("Please specify a year");
     return;
   }
 
   if (!day) {
-    console.error('Please specify a day');
+    console.error("Please specify a day");
     return;
   }
 
   if (!process.env.AOC_SESSION_COOKIE) {
-    console.error('Please specify a session cookie in .env file');
+    console.error("Please specify a session cookie in .env file");
     return;
   }
 
@@ -43,45 +42,48 @@ async function copyTemplate() {
 
   // Copy template file from src/template/solution.js to recently created folder
   try {
-    console.log('Copying template file');
-    fs.copyFileSync(new URL('./template.js', import.meta.url), new URL(`../${year}/day${day}/index.js`, import.meta.url));
+    console.log("Copying template file");
+    fs.copyFileSync(
+      new URL("./template.js", import.meta.url),
+      new URL(`../${year}/day${day}/index.js`, import.meta.url),
+    );
   } catch (err) {
     console.error(err);
   }
 
-//   // Copy input data from AOC to recently created folder
-//   const url = `https://adventofcode.com/${year}/day/${day}/input`;
+  //   // Copy input data from AOC to recently created folder
+  //   const url = `https://adventofcode.com/${year}/day/${day}/input`;
 
-//   console.log(`Downloading input data from ${url}`);
+  //   console.log(`Downloading input data from ${url}`);
 
-//   const options = {
-//     headers: {
-//       Cookie: `session=${process.env.AOC_SESSION_COOKIE};`,
-//       'Host': 'adventofcode.com',
-//       'User-Agent': 'curl/8.7.1',
-//       'Accept': '*/*'
-//     },
-//   };
+  //   const options = {
+  //     headers: {
+  //       Cookie: `session=${process.env.AOC_SESSION_COOKIE};`,
+  //       'Host': 'adventofcode.com',
+  //       'User-Agent': 'curl/8.7.1',
+  //       'Accept': '*/*'
+  //     },
+  //   };
 
-//   // TODO: Check why this is not working 
-//   await https.get(url, options, (res) => {
-//     if (res.statusCode !== 200) {
-//       console.error(`Error: ${res.statusCode}`);
-//       return;
-//     }
+  //   // TODO: Check why this is not working
+  //   await https.get(url, options, (res) => {
+  //     if (res.statusCode !== 200) {
+  //       console.error(`Error: ${res.statusCode}`);
+  //       return;
+  //     }
 
-//     let data = '';
-//     res.on('data', (chunk) => {
-//       data += chunk;
-//     });
+  //     let data = '';
+  //     res.on('data', (chunk) => {
+  //       data += chunk;
+  //     });
 
-//     res.on('end', () => {
-//       fs.writeFileSync(new URL(`../${year}/day${day}/input.txt`, import.meta.url), data);
-//       console.log('Input data copied');
-//     });
-//   }).on('error', (err) => {
-//     console.error(`Error: ${err.message}`);
-//   });
+  //     res.on('end', () => {
+  //       fs.writeFileSync(new URL(`../${year}/day${day}/input.txt`, import.meta.url), data);
+  //       console.log('Input data copied');
+  //     });
+  //   }).on('error', (err) => {
+  //     console.error(`Error: ${err.message}`);
+  //   });
 }
 
 export default copyTemplate;

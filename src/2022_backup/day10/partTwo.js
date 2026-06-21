@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
+  const textFilePath = path.join(__dirname, "input.txt");
 
   const readData = () => {
     const data = fs
-      .readFileSync(textFilePath, 'utf-8')
+      .readFileSync(textFilePath, "utf-8")
       .split(/\r?\n/)
-      .map((row) => row.split(' '));
+      .map((row) => row.split(" "));
 
     return data;
   };
@@ -17,9 +17,9 @@ module.exports = function () {
     const column = (cycle - 1) % COLS;
 
     if ([X - 1, X, X + 1].includes(column)) {
-      return '#';
+      return "#";
     }
-    return '.';
+    return ".";
   };
 
   const updateScreen = (screen, X, cycle) => {
@@ -37,10 +37,12 @@ module.exports = function () {
     let X = 1;
     const total = 0;
     let cycle = 1;
-    const screen = new Array(ROWS).fill('.').map((row) => new Array(COLS).fill(' '));
+    const screen = new Array(ROWS)
+      .fill(".")
+      .map((row) => new Array(COLS).fill(" "));
 
     for (const [operation, argument] of operations) {
-      if (operation == 'noop') {
+      if (operation == "noop") {
         updateScreen(screen, X, cycle);
         cycle++;
       } else {
@@ -52,8 +54,8 @@ module.exports = function () {
       }
     }
 
-    console.log('The screen is');
-    screen.forEach((row) => console.log(row.join('')));
+    console.log("The screen is");
+    screen.forEach((row) => console.log(row.join("")));
   };
 
   main();

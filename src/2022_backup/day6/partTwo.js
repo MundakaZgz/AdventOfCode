@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8');
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8");
     return data;
   }
 
@@ -22,7 +22,7 @@ module.exports = function () {
     const data = getData();
 
     for (let i = 0; i < data.length; i++) {
-      const buffer = data.slice(i, i + 14).split('');
+      const buffer = data.slice(i, i + 14).split("");
       if (areAllDifferent(buffer)) {
         firstMarker = i + 14;
         break;

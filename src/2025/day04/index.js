@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -14,7 +16,13 @@ function canBeMoved(map, row, col) {
       if (offsetRow !== 0 || offsetCol !== 0) {
         const newRow = row + offsetRow;
         const newCol = col + offsetCol;
-        if (newRow >= 0 && newCol >= 0 && newRow < map.length && newCol < map[newRow].length && map[newRow][newCol] === '@') {
+        if (
+          newRow >= 0 &&
+          newCol >= 0 &&
+          newRow < map.length &&
+          newCol < map[newRow].length &&
+          map[newRow][newCol] === "@"
+        ) {
           rollsFound++;
         }
       }
@@ -24,23 +32,23 @@ function canBeMoved(map, row, col) {
 }
 
 async function resolveFirstChallenge(input) {
-  const map = input.split('\n').map((line) => line.split(''));
+  const map = input.split("\n").map((line) => line.split(""));
   let movableRolls = 0;
 
   for (let row = 0; row < map.length; row++) {
     for (let col = 0; col < map[row].length; col++) {
-      if (map[row][col] === '@') {
+      if (map[row][col] === "@") {
         if (canBeMoved(map, row, col)) {
           movableRolls++;
         }
       }
     }
   }
-  console.log('Number of movable rolls:', movableRolls);
+  console.log("Number of movable rolls:", movableRolls);
 }
 
 async function resolveSecondChallenge(input) {
-  const map = input.split('\n').map((line) => line.split(''));
+  const map = input.split("\n").map((line) => line.split(""));
 
   let couldRemoveRolls = true;
   let movableRolls = 0;
@@ -49,9 +57,9 @@ async function resolveSecondChallenge(input) {
     couldRemoveRolls = false;
     for (let row = 0; row < map.length; row++) {
       for (let col = 0; col < map[row].length; col++) {
-        if (map[row][col] === '@') {
+        if (map[row][col] === "@") {
           if (canBeMoved(map, row, col)) {
-            map[row][col] = '.';
+            map[row][col] = ".";
             couldRemoveRolls = true;
             movableRolls++;
           }
@@ -60,7 +68,7 @@ async function resolveSecondChallenge(input) {
     }
   }
 
-  console.log('Number of movable rolls:', movableRolls);
+  console.log("Number of movable rolls:", movableRolls);
 }
 
 run();

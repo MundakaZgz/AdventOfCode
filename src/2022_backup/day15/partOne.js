@@ -1,13 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const DATA_STRUCTURE = /Sensor at x=(?<sensorX>-?\d+), y=(?<sensorY>-?\d+): closest beacon is at x=(?<beaconX>-?\d+), y=(?<beaconY>-?\d+)/;
+const DATA_STRUCTURE =
+  /Sensor at x=(?<sensorX>-?\d+), y=(?<sensorY>-?\d+): closest beacon is at x=(?<beaconX>-?\d+), y=(?<beaconY>-?\d+)/;
 
 function getData() {
-  const textFilePath = path.join(__dirname, 'test_input.txt');
-  const data = fs
-    .readFileSync(textFilePath, 'utf-8')
-    .split('\n');
+  const textFilePath = path.join(__dirname, "test_input.txt");
+  const data = fs.readFileSync(textFilePath, "utf-8").split("\n");
   return data;
 }
 
@@ -42,14 +41,35 @@ function getOccupiedPositionsInLine(sensorsAndBeacons, line, minX, maxX) {
   occupiedPositions.fill(false, minX, maxX);
 
   sensorsAndBeacons.forEach((sensorAndBeacon) => {
-    if (sensorAndBeacon.sensorY <= line && sensorAndBeacon.beaconY >= line || sensorAndBeacon.sensorY >= line && sensorAndBeacon.beaconY <= line) {
-      console.log(`Line from ${sensorAndBeacon.sensorY} to ${sensorAndBeacon.beaconY} crosses line ${line}`);
+    if (
+      (sensorAndBeacon.sensorY <= line && sensorAndBeacon.beaconY >= line) ||
+      (sensorAndBeacon.sensorY >= line && sensorAndBeacon.beaconY <= line)
+    ) {
+      console.log(
+        `Line from ${sensorAndBeacon.sensorY} to ${sensorAndBeacon.beaconY} crosses line ${line}`,
+      );
 
-      const distanceBetweenSensorAndBeacon = getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, sensorAndBeacon.beaconX, sensorAndBeacon.beaconY);
-      console.log(`Distance between sensor and beacon: ${distanceBetweenSensorAndBeacon}`);
+      const distanceBetweenSensorAndBeacon = getManhattanDistance(
+        sensorAndBeacon.sensorX,
+        sensorAndBeacon.sensorY,
+        sensorAndBeacon.beaconX,
+        sensorAndBeacon.beaconY,
+      );
+      console.log(
+        `Distance between sensor and beacon: ${distanceBetweenSensorAndBeacon}`,
+      );
       for (let i = 0; i < maxX - minX; i++) {
-        console.log(`Distance to sensor: ${getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, minX + i, line)}`);
-        if (getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, minX + i, line) <= distanceBetweenSensorAndBeacon) {
+        console.log(
+          `Distance to sensor: ${getManhattanDistance(sensorAndBeacon.sensorX, sensorAndBeacon.sensorY, minX + i, line)}`,
+        );
+        if (
+          getManhattanDistance(
+            sensorAndBeacon.sensorX,
+            sensorAndBeacon.sensorY,
+            minX + i,
+            line,
+          ) <= distanceBetweenSensorAndBeacon
+        ) {
           occupiedPositions[i] = true;
         }
       }
@@ -60,11 +80,19 @@ function getOccupiedPositionsInLine(sensorsAndBeacons, line, minX, maxX) {
 }
 
 function getMinAndMaxX(sensorsAndBeacons) {
-  const minXSensor = Math.min(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.sensorX));
-  const minXBeacon = Math.min(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.beaconX));
+  const minXSensor = Math.min(
+    ...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.sensorX),
+  );
+  const minXBeacon = Math.min(
+    ...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.beaconX),
+  );
   const minX = Math.min(minXSensor, minXBeacon);
-  const maxXSensor = Math.max(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.sensorX));
-  const maxXBeacon = Math.max(...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.beaconX));
+  const maxXSensor = Math.max(
+    ...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.sensorX),
+  );
+  const maxXBeacon = Math.max(
+    ...sensorsAndBeacons.map((sensorAndBeacon) => sensorAndBeacon.beaconX),
+  );
   const maxX = Math.max(maxXSensor, maxXBeacon);
   return {
     minX,
@@ -76,10 +104,19 @@ function main() {
   const sensorsAndBeacons = getSensorsAndBeacons();
   const line = 10;
   const { minX, maxX } = getMinAndMaxX(sensorsAndBeacons);
-  const linePositions = getOccupiedPositionsInLine(sensorsAndBeacons, line, minX, maxX);
-  const solution = linePositions.filter((position) => { position = true; }).length;
+  const linePositions = getOccupiedPositionsInLine(
+    sensorsAndBeacons,
+    line,
+    minX,
+    maxX,
+  );
+  const solution = linePositions.filter((position) => {
+    position = true;
+  }).length;
 
-  console.log(`There are ${solution} positions that cannot contain beacons in line ${line}`);
+  console.log(
+    `There are ${solution} positions that cannot contain beacons in line ${line}`,
+  );
 }
 
 module.exports = {

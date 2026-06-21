@@ -1,32 +1,32 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
   function dataToValues(data) {
     switch (data) {
-      case 'one':
+      case "one":
         return 1;
-      case 'two':
+      case "two":
         return 2;
-      case 'three':
+      case "three":
         return 3;
-      case 'four':
+      case "four":
         return 4;
-      case 'five':
+      case "five":
         return 5;
-      case 'six':
+      case "six":
         return 6;
-      case 'seven':
+      case "seven":
         return 7;
-      case 'eight':
+      case "eight":
         return 8;
-      case 'nine':
+      case "nine":
         return 9;
       default:
         return parseInt(data, 10);

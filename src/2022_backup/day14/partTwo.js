@@ -1,13 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const INITIAL_SAND_COORDINATES = { x: 500, y: 0 };
 
 function getData() {
-  const textFilePath = path.join(__dirname, 'input.txt');
-  const data = fs
-    .readFileSync(textFilePath, 'utf-8')
-    .split('\n');
+  const textFilePath = path.join(__dirname, "input.txt");
+  const data = fs.readFileSync(textFilePath, "utf-8").split("\n");
   return data;
 }
 
@@ -53,16 +51,16 @@ const drawPathsFromData = (data) => {
 };
 
 function drawMap(map, maxDepth) {
-  let mapString = '';
+  let mapString = "";
   for (let y = 0; y <= maxDepth; y++) {
     for (let x = 480; x < 520; x++) {
       if (map.has(`${x},${y}`)) {
-        mapString += '#';
+        mapString += "#";
       } else {
-        mapString += '.';
+        mapString += ".";
       }
     }
-    mapString += '\n';
+    mapString += "\n";
   }
   console.log(mapString);
 }
@@ -72,20 +70,30 @@ function getInput() {
   return drawPathsFromData(data);
 }
 
-const isEmpty = (map, coordinates) => !map.has(`${coordinates.x},${coordinates.y}`);
+const isEmpty = (map, coordinates) =>
+  !map.has(`${coordinates.x},${coordinates.y}`);
 
 const sandCanGoDown = (map, sandUnitCoordinates) => {
-  const nextCoordinate = { x: sandUnitCoordinates.x, y: sandUnitCoordinates.y + 1 };
+  const nextCoordinate = {
+    x: sandUnitCoordinates.x,
+    y: sandUnitCoordinates.y + 1,
+  };
   return isEmpty(map, nextCoordinate);
 };
 
 const sandCanGoDownLeft = (map, sandUnitCoordinates) => {
-  const nextCoordinate = { x: sandUnitCoordinates.x - 1, y: sandUnitCoordinates.y + 1 };
+  const nextCoordinate = {
+    x: sandUnitCoordinates.x - 1,
+    y: sandUnitCoordinates.y + 1,
+  };
   return isEmpty(map, nextCoordinate);
 };
 
 const sandCanGoDownRight = (map, sandUnitCoordinates) => {
-  const nextCoordinate = { x: sandUnitCoordinates.x + 1, y: sandUnitCoordinates.y + 1 };
+  const nextCoordinate = {
+    x: sandUnitCoordinates.x + 1,
+    y: sandUnitCoordinates.y + 1,
+  };
   return isEmpty(map, nextCoordinate);
 };
 
@@ -114,7 +122,10 @@ const dropAsManySandUnitsAsPossible = (map, initialCoordinates, maxDepth) => {
         map.add(`${sandUnitCoordinates.x},${sandUnitCoordinates.y}`);
         sandCanGoFurther = false;
       }
-      if (sandUnitCoordinates.x === initialCoordinates.x && sandUnitCoordinates.y === initialCoordinates.y) {
+      if (
+        sandUnitCoordinates.x === initialCoordinates.x &&
+        sandUnitCoordinates.y === initialCoordinates.y
+      ) {
         reachedTheTopOfTheMap = true;
         sandCanGoFurther = false;
       }
@@ -126,7 +137,11 @@ const dropAsManySandUnitsAsPossible = (map, initialCoordinates, maxDepth) => {
 
 function main() {
   const { map, maxDepth } = getInput();
-  const sandUnits = dropAsManySandUnitsAsPossible(map, INITIAL_SAND_COORDINATES, maxDepth);
+  const sandUnits = dropAsManySandUnitsAsPossible(
+    map,
+    INITIAL_SAND_COORDINATES,
+    maxDepth,
+  );
   drawMap(map, maxDepth);
   console.log(`${sandUnits} sand units could be dropped`);
 }

@@ -1,29 +1,30 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
-  const textFilePath = path.join(__dirname, 'input.txt');
+  const textFilePath = path.join(__dirname, "input.txt");
 
   const getInput = () => {
-    const data = fs.readFileSync(textFilePath, 'utf-8')
-      .split(/\r?\n/);
+    const data = fs.readFileSync(textFilePath, "utf-8").split(/\r?\n/);
 
     const field = {
       start: {},
       end: {},
     };
 
-    field.map = data.map((line, y) => [...line].map((value, x) => {
-      if (value === 'S') {
-        field.start = { y, x };
-        return 0;
-      }
-      if (value === 'E') {
-        field.end = { y, x };
-        return 25;
-      }
-      return value.charCodeAt(0) - 'a'.charCodeAt(0);
-    }));
+    field.map = data.map((line, y) =>
+      [...line].map((value, x) => {
+        if (value === "S") {
+          field.start = { y, x };
+          return 0;
+        }
+        if (value === "E") {
+          field.end = { y, x };
+          return 25;
+        }
+        return value.charCodeAt(0) - "a".charCodeAt(0);
+      }),
+    );
 
     return field;
   };

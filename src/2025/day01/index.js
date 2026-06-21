@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -11,12 +13,12 @@ async function resolveFirstChallenge(input) {
   let timesAt0 = 0;
   let dial = 50;
   console.log(`The dial starts pointing at ${dial}`);
-  for (const line of input.split('\n')) {
+  for (const line of input.split("\n")) {
     const direction = line[0];
     const value = parseInt(line.slice(1, 10), 10);
-    if (direction === 'L') {
+    if (direction === "L") {
       dial -= value;
-    } else if (direction === 'R') {
+    } else if (direction === "R") {
       dial += value;
     }
     while (dial < 0) {
@@ -30,7 +32,7 @@ async function resolveFirstChallenge(input) {
     }
     console.log(`The dial is rotated ${line} to point at ${dial}`);
   }
-  console.log('Times leftpointing at 0:', timesAt0);
+  console.log("Times leftpointing at 0:", timesAt0);
 }
 
 async function resolveSecondChallenge(input) {
@@ -38,7 +40,7 @@ async function resolveSecondChallenge(input) {
   let dial = 50;
 
   console.log(`The dial starts pointing at ${dial}`);
-  for (const line of input.split('\n')) {
+  for (const line of input.split("\n")) {
     const direction = line[0];
     let value = parseInt(line.slice(1, 10), 10);
     let timesAt0 = 0;
@@ -49,7 +51,7 @@ async function resolveSecondChallenge(input) {
       value %= 100;
     }
 
-    if (direction === 'L') {
+    if (direction === "L") {
       if (dial - value < 0 && dial !== 0) {
         timesAt0++;
       }
@@ -59,7 +61,7 @@ async function resolveSecondChallenge(input) {
       }
     }
 
-    if (direction === 'R') {
+    if (direction === "R") {
       if (dial + value > 100 && dial !== 0) {
         timesAt0++;
       }
@@ -76,9 +78,11 @@ async function resolveSecondChallenge(input) {
 
     totalTimesAt0 += timesAt0;
 
-    console.log(`The dial is rotated ${line} to point at ${dial}${timesAt0 > 0 && dial !== 0 ? ` (during this rotation, it points at 0 ${timesAt0}.` : ''}`);
+    console.log(
+      `The dial is rotated ${line} to point at ${dial}${timesAt0 > 0 && dial !== 0 ? ` (during this rotation, it points at 0 ${timesAt0}.` : ""}`,
+    );
   }
-  console.log('Times passing by 0:', totalTimesAt0);
+  console.log("Times passing by 0:", totalTimesAt0);
 }
 
 run();

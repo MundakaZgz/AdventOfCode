@@ -1,11 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const utils = require('./utils');
+const fs = require("fs");
+const path = require("path");
+const utils = require("./utils");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
@@ -13,7 +13,7 @@ module.exports = function () {
     let score = 0;
     const data = getData();
     for (const game of data) {
-      const [rival, whatShouldIDo] = game.split(' ');
+      const [rival, whatShouldIDo] = game.split(" ");
       score += utils.getPlayScoreFollowingStrategy(rival, whatShouldIDo);
     }
     console.log(`The final score is ${score}`);

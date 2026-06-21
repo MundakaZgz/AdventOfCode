@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
@@ -22,9 +22,20 @@ module.exports = function () {
     const offsites = [-1, 0, 1];
     for (const verticalOffsite of offsites) {
       for (const horizontalOffsite of offsites) {
-        if (y + verticalOffsite >= 0 && y + verticalOffsite < schematic.length && x + horizontalOffsite >= 0 && x + horizontalOffsite < schematic[y + verticalOffsite].length) {
-          if (isASymbol(schematic[x + horizontalOffsite][y + verticalOffsite])) {
-            return { value: schematic[x + horizontalOffsite][y + verticalOffsite], x: x + horizontalOffsite, y: y + verticalOffsite };
+        if (
+          y + verticalOffsite >= 0 &&
+          y + verticalOffsite < schematic.length &&
+          x + horizontalOffsite >= 0 &&
+          x + horizontalOffsite < schematic[y + verticalOffsite].length
+        ) {
+          if (
+            isASymbol(schematic[x + horizontalOffsite][y + verticalOffsite])
+          ) {
+            return {
+              value: schematic[x + horizontalOffsite][y + verticalOffsite],
+              x: x + horizontalOffsite,
+              y: y + verticalOffsite,
+            };
           }
         }
       }
@@ -47,14 +58,22 @@ module.exports = function () {
           number = number * 10 + parseInt(schematic[i][j], 10);
           // if the number was not qualified for a part number, check if it qualifies now
           if (!qualifiesForPartNumber) {
-            qualifiesForPartNumber = checkIfQualifiesForPartNumber(schematic, i, j);
+            qualifiesForPartNumber = checkIfQualifiesForPartNumber(
+              schematic,
+              i,
+              j,
+            );
           }
           if (j === line.length - 1) {
             // if we are at the end of the line, we add the number to the part numbers
             partNumbers.add({
               number,
-              gearValue: qualifiesForPartNumber ? qualifiesForPartNumber.value : null,
-              position: qualifiesForPartNumber ? [qualifiesForPartNumber.x, qualifiesForPartNumber.y].join('-') : null,
+              gearValue: qualifiesForPartNumber
+                ? qualifiesForPartNumber.value
+                : null,
+              position: qualifiesForPartNumber
+                ? [qualifiesForPartNumber.x, qualifiesForPartNumber.y].join("-")
+                : null,
             });
             // Reset conditions
             numberDetected = false;
@@ -65,8 +84,12 @@ module.exports = function () {
           // we had a number detected before and now we have a symbol
           partNumbers.add({
             number,
-            gearValue: qualifiesForPartNumber ? qualifiesForPartNumber.value : null,
-            position: qualifiesForPartNumber ? [qualifiesForPartNumber.x, qualifiesForPartNumber.y].join('-') : null,
+            gearValue: qualifiesForPartNumber
+              ? qualifiesForPartNumber.value
+              : null,
+            position: qualifiesForPartNumber
+              ? [qualifiesForPartNumber.x, qualifiesForPartNumber.y].join("-")
+              : null,
           });
 
           // Reset conditions
@@ -95,10 +118,12 @@ module.exports = function () {
 
   const main = () => {
     const lines = getData();
-    const shematic = lines.map((line) => line.split(''));
+    const shematic = lines.map((line) => line.split(""));
 
     const partNumbers = getPartNumbers(shematic);
-    const gears = partNumbers.filter((partNumber) => partNumber.gearValue === '*');
+    const gears = partNumbers.filter(
+      (partNumber) => partNumber.gearValue === "*",
+    );
     const groupedGears = groupGearsByPosition(gears);
 
     let gearRatios = 0;

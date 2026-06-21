@@ -1,19 +1,27 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/).map((n) => n.split(''));
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs
+      .readFileSync(textFilePath, "utf8")
+      .split(/\r?\n/)
+      .map((n) => n.split(""));
     return data;
   }
 
   function isBorder(treeArray, row, col) {
-    const [numberOfRows, numberOfCols] = [treeArray.length, treeArray[0].length];
-    return row === 0
-    || col === 0
-    || row === numberOfRows - 1
-    || col === numberOfCols - 1;
+    const [numberOfRows, numberOfCols] = [
+      treeArray.length,
+      treeArray[0].length,
+    ];
+    return (
+      row === 0 ||
+      col === 0 ||
+      row === numberOfRows - 1 ||
+      col === numberOfCols - 1
+    );
   }
 
   function isVisible(treeArray, row, col) {
@@ -37,7 +45,10 @@ module.exports = function () {
 
   function countVisibleTrees(treeArray) {
     let visibleTrees = 0;
-    const [numberOfRows, numberOfCols] = [treeArray.length, treeArray[0].length];
+    const [numberOfRows, numberOfCols] = [
+      treeArray.length,
+      treeArray[0].length,
+    ];
 
     for (let row = 0; row < numberOfRows; row++) {
       for (let col = 0; col < numberOfCols; col++) {

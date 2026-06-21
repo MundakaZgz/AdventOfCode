@@ -1,5 +1,5 @@
 module.exports = () => {
-  const partOne = require('./partOne').main;
+  const partOne = require("./partOne").main;
   if (partOne) {
     partOne();
   }

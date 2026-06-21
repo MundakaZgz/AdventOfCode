@@ -1,16 +1,20 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
   function getCardNumbers(line) {
-    const cleanLine = line.replaceAll(/\s+/g, ' ').replaceAll(/Card \d+: /g, '');
-    const numberGroups = cleanLine.split('|').map((group) => group.trim().split(' '));
+    const cleanLine = line
+      .replaceAll(/\s+/g, " ")
+      .replaceAll(/Card \d+: /g, "");
+    const numberGroups = cleanLine
+      .split("|")
+      .map((group) => group.trim().split(" "));
     return {
       myNumbers: numberGroups[0],
       winningNumbers: numberGroups[1],
@@ -22,7 +26,7 @@ module.exports = function () {
 
     cards.myNumbers.forEach((number) => {
       if (cards.winningNumbers.includes(number)) {
-        hits === 0 ? hits++ : hits *= 2;
+        hits === 0 ? hits++ : (hits *= 2);
       }
     });
 

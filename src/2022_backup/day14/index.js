@@ -1,9 +1,9 @@
 module.exports = () => {
-  const partOne = require('./partOne').main;
+  const partOne = require("./partOne").main;
   if (partOne) {
     partOne();
   }
-  const partTwo = require('./partTwo').main;
+  const partTwo = require("./partTwo").main;
   if (partTwo) {
     partTwo();
   }

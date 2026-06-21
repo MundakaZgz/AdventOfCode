@@ -1,11 +1,11 @@
-const fs = require('fs');
+const fs = require("fs");
 
-const path = require('path');
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
@@ -57,7 +57,7 @@ module.exports = function () {
     crates.map((x) => x.reverse());
     moveCrates(lines, crates);
 
-    const topCrates = crates.map((x) => x.at(-1)).join('');
+    const topCrates = crates.map((x) => x.at(-1)).join("");
     console.log(`The crates at the top are ${topCrates}`);
   }
 
