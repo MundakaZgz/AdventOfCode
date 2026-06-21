@@ -2,18 +2,16 @@
   "name": "adventofcode",
   "version": "1.0.0",
   "description": "Advent of code",
+  "type": "module",
   "devDependencies": {
-    "chai": "^6.2.2",
-    "eslint": "^10.5.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.32.0",
-    "mocha": "^11.7.6"
+    "chai": "6.2.2",
+    "mocha": "11.7.6",
+    "dotenv": "16.3.1"
   },
   "scripts": {
     "start": "node --inspect index.js",
     "debug": "node --inspect-brk index.js",
-    "test": "mocha src/**/*.test.js",
-    "lint": "npx eslint ."
+    "test": "mocha src/**/*.test.js"
   },
   "repository": {
     "type": "git",
