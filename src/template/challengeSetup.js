@@ -1,6 +1,4 @@
-import path from "path";
 import fs from "node:fs";
-import https from "https";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 

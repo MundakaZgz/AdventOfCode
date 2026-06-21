@@ -81,7 +81,7 @@ const getPlayScoreFollowingStrategy = (rival, whatShouldIDo) => {
   return getPlayScore(rival, myMove);
 };
 
-module.exports = {
+export default {
   getPlayScore,
   getPlayScoreFollowingStrategy,
 };
