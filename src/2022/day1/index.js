@@ -1,4 +1,3 @@
-import path from "path";
 import fs from "node:fs";
 
 export async function run() {
@@ -31,7 +30,7 @@ async function resolveFirstChallenge(input) {
   }
 
   const maxCalories = Math.max(...elves);
-  const numberOfElfWithMaxCalories = elves.indexOf(maxCalories) + 1;
+  //const numberOfElfWithMaxCalories = elves.indexOf(maxCalories) + 1;
 
   // console.log(`The elf with the most number of calories is elf number ${numberOfElfWithMaxCalories} with ${maxCalories} calories`);
 
