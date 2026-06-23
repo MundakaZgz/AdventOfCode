@@ -12,8 +12,7 @@ async function executeChallenge() {
       await challenge.run();
     } 
   } catch (error) {
-    console.log(`${error.message}. \nSetting up challenge for year ${year}, day ${day}...`);
-    await copyTemplate();
+    console.error(`${error.message}. \nUnable to run solution for year ${year} day ${day}: ${error}`, error.stack);
   }
 }
 
