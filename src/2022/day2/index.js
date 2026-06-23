@@ -19,25 +19,24 @@ async function resolveFirstChallenge(input) {
   const data = input.split(/\r?\n/);
   let score = 0;
 
-    for (const game of data) {
-      const plays = game.split(" ");
-      score += utils.getPlayScore(plays[0], plays[1]);
-    }
+  for (const game of data) {
+    const plays = game.split(" ");
+    score += utils.getPlayScore(plays[0], plays[1]);
+  }
 
-    //console.log(`The final score is ${score}`);
+  //console.log(`The final score is ${score}`);
 
-    return score;
-
+  return score;
 }
 
 async function resolveSecondChallenge(input) {
   const data = input.split(/\r?\n/);
-    let score = 0;
-    for (const game of data) {
-      const [rival, whatShouldIDo] = game.split(" ");
-      score += utils.getPlayScoreFollowingStrategy(rival, whatShouldIDo);
-    }
-    //console.log(`The final score is ${score}`);
+  let score = 0;
+  for (const game of data) {
+    const [rival, whatShouldIDo] = game.split(" ");
+    score += utils.getPlayScoreFollowingStrategy(rival, whatShouldIDo);
+  }
+  //console.log(`The final score is ${score}`);
 
-    return score;
+  return score;
 }

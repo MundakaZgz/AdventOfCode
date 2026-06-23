@@ -1,60 +1,60 @@
 import fs from "node:fs";
 
 const priorities = [
-      "",
-      "a",
-      "b",
-      "c",
-      "d",
-      "e",
-      "f",
-      "g",
-      "h",
-      "i",
-      "j",
-      "k",
-      "l",
-      "m",
-      "n",
-      "o",
-      "p",
-      "q",
-      "r",
-      "s",
-      "t",
-      "u",
-      "v",
-      "w",
-      "x",
-      "y",
-      "z",
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-    ];
+  "",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
 
 export async function run() {
   const input = fs
@@ -74,50 +74,50 @@ export async function run() {
 async function resolveFirstChallenge(input) {
   let sumOfPriorities = 0;
 
-    const data = input.split(/\r?\n/);
+  const data = input.split(/\r?\n/);
 
-    for (const rucksack of data) {
-      const compartment1 = rucksack.slice(0, rucksack.length / 2);
-      const compartment2 = rucksack.slice(-rucksack.length / 2);
-      let foundLetter = "";
-      compartment1.split("").forEach((letter) => {
-        if (compartment2.indexOf(letter) !== -1) {
-          foundLetter = letter;
-        }
-        sumOfPriorities += priorities.indexOf(foundLetter);
-      });
-    }
+  for (const rucksack of data) {
+    const compartment1 = rucksack.slice(0, rucksack.length / 2);
+    const compartment2 = rucksack.slice(-rucksack.length / 2);
+    let foundLetter = "";
+    compartment1.split("").forEach((letter) => {
+      if (compartment2.indexOf(letter) !== -1) {
+        foundLetter = letter;
+      }
+      sumOfPriorities += priorities.indexOf(foundLetter);
+    });
+  }
 
-    // console.log(`The sum of priorities is ${sumOfPriorities}`);
+  // console.log(`The sum of priorities is ${sumOfPriorities}`);
 
-    return sumOfPriorities;
+  return sumOfPriorities;
 }
 
 async function resolveSecondChallenge(input) {
-    let sumOfPriorities = 0;
+  let sumOfPriorities = 0;
 
-    const lines = input.split(/\r?\n/);
+  const lines = input.split(/\r?\n/);
 
-    for (let i = 0; i < lines.length; i += 3) {
-      const firstRucksack = lines[i].split("");
-      const secondRucksack = lines[i + 1].split("");
-      const thirdRucksack = lines[i + 2].split("");
+  for (let i = 0; i < lines.length; i += 3) {
+    const firstRucksack = lines[i].split("");
+    const secondRucksack = lines[i + 1].split("");
+    const thirdRucksack = lines[i + 2].split("");
 
-      let foundLetter = "";
+    let foundLetter = "";
 
-      firstRucksack.forEach((letter) => {
-        if (
-          secondRucksack.indexOf(letter) !== -1 &&
-          thirdRucksack.indexOf(letter) !== -1
-        ) {
-          foundLetter = letter;
-        }
-      });
+    firstRucksack.forEach((letter) => {
+      if (
+        secondRucksack.indexOf(letter) !== -1 &&
+        thirdRucksack.indexOf(letter) !== -1
+      ) {
+        foundLetter = letter;
+      }
+    });
 
-      sumOfPriorities += priorities.indexOf(foundLetter);
-    }
+    sumOfPriorities += priorities.indexOf(foundLetter);
+  }
 
-    // console.log(`The sum of priorities is ${sumOfPriorities}`);
+  // console.log(`The sum of priorities is ${sumOfPriorities}`);
 
-    return sumOfPriorities;
+  return sumOfPriorities;
 }

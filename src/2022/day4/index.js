@@ -15,43 +15,43 @@ export async function run() {
 }
 
 async function resolveFirstChallenge(input) {
-let numAssignmentsFullyContained = 0;
-    const data = input.split(/\r?\n/);
-    for (const pair of data) {
-      const [assignment1, assignment2] = pair.split(",", 2);
-      const [lower1, upper1] = assignment1.split("-", 2).map(Number);
-      const [lower2, upper2] = assignment2.split("-", 2).map(Number);
+  let numAssignmentsFullyContained = 0;
+  const data = input.split(/\r?\n/);
+  for (const pair of data) {
+    const [assignment1, assignment2] = pair.split(",", 2);
+    const [lower1, upper1] = assignment1.split("-", 2).map(Number);
+    const [lower2, upper2] = assignment2.split("-", 2).map(Number);
 
-      if (
-        (lower1 >= lower2 && upper1 <= upper2) ||
-        (lower2 >= lower1 && upper2 <= upper1)
-      ) {
-        numAssignmentsFullyContained++;
-      }
+    if (
+      (lower1 >= lower2 && upper1 <= upper2) ||
+      (lower2 >= lower1 && upper2 <= upper1)
+    ) {
+      numAssignmentsFullyContained++;
     }
-    // console.log(
-    //   `There are ${numAssignmentsFullyContained} assignments that overlap`,
-    // );
-    return numAssignmentsFullyContained;
+  }
+  // console.log(
+  //   `There are ${numAssignmentsFullyContained} assignments that overlap`,
+  // );
+  return numAssignmentsFullyContained;
 }
 
 async function resolveSecondChallenge(input) {
-    let numAssignmentsFullyContained = 0;
-    const data = input.split(/\r?\n/);
+  let numAssignmentsFullyContained = 0;
+  const data = input.split(/\r?\n/);
 
-    for (const pair of data) {
-      const [assignment1, assignment2] = pair.split(",", 2);
-      const [lower1, upper1] = assignment1.split("-", 2).map(Number);
-      const [lower2, upper2] = assignment2.split("-", 2).map(Number);
+  for (const pair of data) {
+    const [assignment1, assignment2] = pair.split(",", 2);
+    const [lower1, upper1] = assignment1.split("-", 2).map(Number);
+    const [lower2, upper2] = assignment2.split("-", 2).map(Number);
 
-      if (lower1 <= upper2 && upper1 >= lower2) {
-        numAssignmentsFullyContained++;
-      }
+    if (lower1 <= upper2 && upper1 >= lower2) {
+      numAssignmentsFullyContained++;
     }
+  }
 
-    // console.log(
-    //   `There are ${numAssignmentsFullyContained} assignments that overlap`,
-    // );
+  // console.log(
+  //   `There are ${numAssignmentsFullyContained} assignments that overlap`,
+  // );
 
-    return numAssignmentsFullyContained;
+  return numAssignmentsFullyContained;
 }
