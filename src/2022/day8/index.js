@@ -107,6 +107,6 @@ async function resolveSecondChallenge(input) {
   }
 
   // console.log(`The maximim visibility is ${maximumVisibility} visible trees`);
-  
+
   return maximumVisibility;
 }
