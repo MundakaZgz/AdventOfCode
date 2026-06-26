@@ -15,74 +15,74 @@ export async function run() {
 }
 
 async function resolveFirstChallenge(input) {
-    const operations = input.split(/\r?\n/).map((row) => row.split(" "));
-    let X = 1;
-    let total = 0;
-    let cycle = 1;
+  const operations = input.split(/\r?\n/).map((row) => row.split(" "));
+  let X = 1;
+  let total = 0;
+  let cycle = 1;
 
-    for (const [operation, argument] of operations) {
+  for (const [operation, argument] of operations) {
+    if (cycle % 40 == 20) {
+      total += cycle * X;
+    }
+    cycle += 1;
+
+    if (operation == "addx") {
       if (cycle % 40 == 20) {
         total += cycle * X;
       }
+      X += Number(argument);
       cycle += 1;
-
-      if (operation == "addx") {
-        if (cycle % 40 == 20) {
-          total += cycle * X;
-        }
-        X += Number(argument);
-        cycle += 1;
-      }
     }
+  }
 
-    console.log(`The sum of the signals is ${total}`);
+  console.log(`The sum of the signals is ${total}`);
 
-    return total;
+  return total;
 }
 
 const getPixel = (cycle, X) => {
-    const column = (cycle - 1) % COLS;
+  const column = (cycle - 1) % COLS;
 
-    if ([X - 1, X, X + 1].includes(column)) {
-      return "#";
-    }
-    return ".";
-  };
+  if ([X - 1, X, X + 1].includes(column)) {
+    return "#";
+  }
+  return ".";
+};
 
-  const updateScreen = (screen, X, cycle) => {
-    const row = parseInt((cycle - 1) / COLS, 10);
-    const col = (cycle - 1) % COLS;
+const updateScreen = (screen, X, cycle) => {
+  const row = parseInt((cycle - 1) / COLS, 10);
+  const col = (cycle - 1) % COLS;
 
-    screen[row][col] = getPixel(cycle, X);
-  };
+  screen[row][col] = getPixel(cycle, X);
+};
 
-  const COLS = 40;
-  const ROWS = 6;
+const COLS = 40;
+const ROWS = 6;
 
 async function resolveSecondChallenge(input) {
-    const operations = input.split(/\r?\n/).map((row) => row.split(" "));
-    let X = 1;
-    const total = 0;
-    let cycle = 1;
-    const screen = new Array(ROWS)
-      .fill(".")
-      .map((row) => new Array(COLS).fill(" "));
+  const operations = input.split(/\r?\n/).map((row) => row.split(" "));
+  let X = 1;
+  const total = 0;
+  let cycle = 1;
+  const screen = new Array(ROWS)
+    .fill(".")
+    .map((row) => new Array(COLS).fill(" "));
 
-    for (const [operation, argument] of operations) {
-      if (operation == "noop") {
+  for (const [operation, argument] of operations) {
+    if (operation == "noop") {
+      updateScreen(screen, X, cycle);
+      cycle++;
+    } else {
+      for (let loop = 0; loop < 2; loop++) {
         updateScreen(screen, X, cycle);
         cycle++;
-      } else {
-        for (let loop = 0; loop < 2; loop++) {
-          updateScreen(screen, X, cycle);
-          cycle++;
-        }
-        X += Number(argument);
       }
+      X += Number(argument);
     }
+  }
 
-    console.log("The screen is");
-    screen.forEach((row) => console.log(row.join("")));
+  console.log("The screen is");
+  screen.forEach((row) => console.log(row.join("")));
 
-    return "FBURHZCH";
+  return "FBURHZCH";
 }
