@@ -1,17 +1,17 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
   function getPipeMap(data) {
     const pipeMap = [];
     for (let row = 0; row < data.length; row++) {
-      const rowArray = data[row].split('');
+      const rowArray = data[row].split("");
       pipeMap.push([]);
       for (let col = 0; col < rowArray.length; col++) {
         pipeMap[row].push({
@@ -24,44 +24,44 @@ module.exports = function () {
   }
 
   function pipeComesFromNorth(pipeMap, row, col) {
-    return ['|', '7', 'F'].includes(pipeMap[row - 1][col].value);
+    return ["|", "7", "F"].includes(pipeMap[row - 1][col].value);
   }
 
   function pipeComesFromSouth(pipeMap, row, col) {
-    return ['L', 'J', '|'].includes(pipeMap[row + 1][col].value);
+    return ["L", "J", "|"].includes(pipeMap[row + 1][col].value);
   }
 
   function pipeComesFromEast(pipeMap, row, col) {
-    return ['7', '-', 'J'].includes(pipeMap[row][col + 1].value);
+    return ["7", "-", "J"].includes(pipeMap[row][col + 1].value);
   }
 
   function pipeComesFromWest(pipeMap, row, col) {
-    return ['L', '-', 'F'].includes(pipeMap[row][col - 1].value);
+    return ["L", "-", "F"].includes(pipeMap[row][col - 1].value);
   }
 
   function getStartingPointValue(pipeMap, row, col) {
     if (pipeComesFromNorth(pipeMap, row, col)) {
       if (pipeComesFromEast(pipeMap, row, col)) {
-        return 'L';
+        return "L";
       }
       if (pipeComesFromSouth(pipeMap, row, col)) {
-        return '|';
+        return "|";
       }
       if (pipeComesFromWest(pipeMap, row, col)) {
-        return 'J';
+        return "J";
       }
     }
     if (pipeComesFromEast(pipeMap, row, col)) {
       if (pipeComesFromSouth(pipeMap, row, col)) {
-        return 'F';
+        return "F";
       }
       if (pipeComesFromWest(pipeMap, row, col)) {
-        return '-';
+        return "-";
       }
     }
     if (pipeComesFromSouth(pipeMap, row, col)) {
       if (pipeComesFromWest(pipeMap, row, col)) {
-        return '7';
+        return "7";
       }
     }
   }
@@ -69,10 +69,13 @@ module.exports = function () {
   function getStartingPoint(pipeMap) {
     for (let row = 0; row < pipeMap.length; row++) {
       for (let col = 0; col < pipeMap[row].length; col++) {
-        if (pipeMap[row][col].value === 'S') {
+        if (pipeMap[row][col].value === "S") {
           pipeMap[row][col].value = getStartingPointValue(pipeMap, row, col);
           return {
-            row, col, value: pipeMap[row][col].value, visited: true,
+            row,
+            col,
+            value: pipeMap[row][col].value,
+            visited: true,
           };
         }
       }
@@ -86,19 +89,19 @@ module.exports = function () {
 
   function getOffsites(cellValue) {
     switch (cellValue) {
-      case '|':
+      case "|":
         return [NORTH, SOUTH];
-      case '-':
+      case "-":
         return [EAST, WEST];
-      case 'L':
+      case "L":
         return [NORTH, EAST];
-      case 'J':
+      case "J":
         return [NORTH, WEST];
-      case '7':
+      case "7":
         return [SOUTH, WEST];
-      case 'F':
+      case "F":
         return [SOUTH, EAST];
-      case 'S':
+      case "S":
         return [NORTH, SOUTH, EAST, WEST];
       default:
         return [];
@@ -107,7 +110,9 @@ module.exports = function () {
 
   function getNextPoint(currentPoint, pipeMap) {
     // calculate options
-    const offsites = getOffsites(pipeMap[currentPoint.row][currentPoint.col].value);
+    const offsites = getOffsites(
+      pipeMap[currentPoint.row][currentPoint.col].value,
+    );
     // check options
     for (let i = 0; i < offsites.length; i++) {
       const option = offsites[i];
@@ -115,9 +120,17 @@ module.exports = function () {
       const nextCol = currentPoint.col + option.horizontal;
 
       // if option is valid, return option
-      if (pipeMap[nextRow] && pipeMap[nextRow][nextCol] && pipeMap[nextRow][nextCol].value !== '.' && !pipeMap[nextRow][nextCol].visited) {
+      if (
+        pipeMap[nextRow] &&
+        pipeMap[nextRow][nextCol] &&
+        pipeMap[nextRow][nextCol].value !== "." &&
+        !pipeMap[nextRow][nextCol].visited
+      ) {
         return {
-          row: nextRow, col: nextCol, value: pipeMap[nextRow][nextCol].value, visited: false,
+          row: nextRow,
+          col: nextCol,
+          value: pipeMap[nextRow][nextCol].value,
+          visited: false,
         };
       }
     }
@@ -146,7 +159,9 @@ module.exports = function () {
 
     const path = getStepsFromStartingPoint(startingPoint, pipeMap);
 
-    console.log(`The number of steps to the farthest point is ${path.length / 2}`);
+    console.log(
+      `The number of steps to the farthest point is ${path.length / 2}`,
+    );
   };
 
   main();

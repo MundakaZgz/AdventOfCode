@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -11,7 +13,7 @@ async function resolveFirstChallenge(input) {
   const disk = initDisk(input);
   const defragDisk = defrag(disk);
   const checksum = calculateChecksum(defragDisk);
-  console.log('The checksum is:', checksum);
+  console.log("The checksum is:", checksum);
 }
 
 function initDisk(input) {
@@ -28,7 +30,7 @@ function initDisk(input) {
       } else {
         disk.push({
           id: 0,
-          value: '.',
+          value: ".",
         });
       }
     }
@@ -42,13 +44,13 @@ function initDisk(input) {
 
 function defrag(disk) {
   for (let i = disk.length - 1; i >= 0; i--) {
-    if (disk[i].value !== '.') {
+    if (disk[i].value !== ".") {
       for (let j = 0; j < i; j++) {
-        if (disk[j].value === '.') {
+        if (disk[j].value === ".") {
           disk[j].value = disk[i].value;
           disk[j].id = disk[i].id;
-          disk[i].value = '.';
-          disk[i].id = '.';
+          disk[i].value = ".";
+          disk[i].id = ".";
           break;
         }
       }
@@ -59,7 +61,7 @@ function defrag(disk) {
 
 function calculateChecksum(disk) {
   return disk
-    .map((el, index) => (el.value !== '.' ? index * el.id : 0))
+    .map((el, index) => (el.value !== "." ? index * el.id : 0))
     .reduce((sum, value) => sum + value, 0);
 }
 
@@ -70,7 +72,7 @@ function calculateAlternativeChecksum(disk) {
   for (let i = 0; i < disk.length; i++) {
     for (let j = 0; j < disk[i].slots; j++) {
       const itemId = disk[i].id;
-      if (itemId !== '.') {
+      if (itemId !== ".") {
         checksum += position * itemId;
       }
       position++;
@@ -84,7 +86,7 @@ function alternativeInit(input) {
   const disk = [];
   let id = 0;
   for (let i = 0; i < input.length; i++) {
-    let idValue = '.';
+    let idValue = ".";
     if (i % 2 === 0) {
       idValue = id;
       id++;
@@ -99,9 +101,12 @@ function alternativeInit(input) {
 
 function alternativeDefrag(disk) {
   for (let valueIndex = disk.length - 1; valueIndex >= 0; valueIndex--) {
-    if (disk[valueIndex].id !== '.') {
+    if (disk[valueIndex].id !== ".") {
       for (let gapIndex = 0; gapIndex < valueIndex; gapIndex++) {
-        if (disk[gapIndex].id === '.' && disk[gapIndex].slots >= disk[valueIndex].slots) {
+        if (
+          disk[gapIndex].id === "." &&
+          disk[gapIndex].slots >= disk[valueIndex].slots
+        ) {
           const shiftingId = disk[valueIndex].id;
           const shiftingSlots = disk[valueIndex].slots;
           const difference = disk[gapIndex].slots - disk[valueIndex].slots;
@@ -110,17 +115,17 @@ function alternativeDefrag(disk) {
           disk[gapIndex].slots = shiftingSlots;
 
           if (difference > 0) {
-            if (gapIndex + 1 < disk.length && disk[gapIndex + 1].id === '.') {
+            if (gapIndex + 1 < disk.length && disk[gapIndex + 1].id === ".") {
               disk[gapIndex + 1].slots += difference;
             } else {
               disk.splice(gapIndex + 1, 0, {
                 slots: difference,
-                id: '.',
+                id: ".",
               });
               valueIndex++;
             }
           }
-          disk[valueIndex].id = '.';
+          disk[valueIndex].id = ".";
           break;
         }
       }
@@ -134,7 +139,7 @@ async function resolveSecondChallenge(input) {
   const disk = alternativeInit(input);
   const defragDisk = alternativeDefrag(disk);
   const checksum = calculateAlternativeChecksum(defragDisk);
-  console.log('The checksum is:', checksum);
+  console.log("The checksum is:", checksum);
 }
 
 run();

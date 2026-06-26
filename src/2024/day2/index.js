@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -18,7 +20,7 @@ function checkProgression(elements) {
 }
 
 function checkSafety(line) {
-  const levels = line.split(' ').map(Number);
+  const levels = line.split(" ").map(Number);
 
   const increasingProgression = checkProgression(levels);
   const decreasingProgression = checkProgression(levels.toReversed());
@@ -27,7 +29,7 @@ function checkSafety(line) {
 }
 
 function checkSafetyWithDampener(line) {
-  const levels = line.split(' ').map(Number);
+  const levels = line.split(" ").map(Number);
 
   const increasingProgression = checkProgression(levels);
   const decreasingProgression = checkProgression(levels.toReversed());
@@ -40,26 +42,28 @@ function checkSafetyWithDampener(line) {
   for (let i = 0; i < levels.length; i++) {
     const filteredLevels = levels.filter((_, index) => index !== i);
     const filteredProgression = checkProgression(filteredLevels);
-    const filteredReverseLevels = levels.toReversed().filter((_, index) => index !== i);
+    const filteredReverseLevels = levels
+      .toReversed()
+      .filter((_, index) => index !== i);
     const filteredReverseProgression = checkProgression(filteredReverseLevels);
     if (filteredProgression || filteredReverseProgression) {
       return true;
     }
   }
 
-  console.log('Problematic line:', line);
+  console.log("Problematic line:", line);
 
   return false;
 }
 
 async function resolveFirstChallenge(input) {
-  const lines = input.split('\n');
+  const lines = input.split("\n");
   const reports = lines.map(checkSafety).filter(Boolean);
   console.log(`There are ${reports.length} safe levels`);
 }
 
 async function resolveSecondChallenge(input) {
-  const lines = input.split('\n');
+  const lines = input.split("\n");
   const reports = lines.map(checkSafetyWithDampener).filter(Boolean);
   console.log(`There are ${reports.length} safe levels`);
 }

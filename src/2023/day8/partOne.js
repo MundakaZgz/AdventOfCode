@@ -1,15 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
   function getPathAndMap(data) {
-    const path = data[0].split('');
+    const path = data[0].split("");
     const map = {};
     const dataReg = /\w{3}/g;
     for (let line = 2; line < data.length; line++) {
@@ -30,12 +30,12 @@ module.exports = function () {
     const data = getData();
     const { path, map } = getPathAndMap(data);
     let steps = 0;
-    let currentPosition = 'AAA';
+    let currentPosition = "AAA";
 
     do {
       currentPosition = map[currentPosition][path[steps % path.length]];
       steps++;
-    } while (currentPosition !== 'ZZZ');
+    } while (currentPosition !== "ZZZ");
 
     console.log(`The number of steps to get to ZZZ is: ${steps}`);
   };

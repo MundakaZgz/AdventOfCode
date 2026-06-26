@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -30,7 +32,9 @@ function isPossibleToCalculateWithAThirdOperator(solution, values) {
     for (let j = 0; j < calculations.length; j++) {
       updatedCalculations.push(calculations[j] + values[i]);
       updatedCalculations.push(calculations[j] * values[i]);
-      updatedCalculations.push(parseInt(String(calculations[j]) + String(values[i]), 10));
+      updatedCalculations.push(
+        parseInt(String(calculations[j]) + String(values[i]), 10),
+      );
     }
     calculations = updatedCalculations;
   }
@@ -39,9 +43,13 @@ function isPossibleToCalculateWithAThirdOperator(solution, values) {
 }
 
 async function resolveFirstChallenge(input) {
-  const equations = input.split('\n');
-  const solutions = equations.map((x) => x.split(': ')[0]).map((x) => parseInt(x, 10));
-  const values = equations.map((x) => x.split(': ')[1].split(' ')).map((x) => x.map((y) => parseInt(y, 10)));
+  const equations = input.split("\n");
+  const solutions = equations
+    .map((x) => x.split(": ")[0])
+    .map((x) => parseInt(x, 10));
+  const values = equations
+    .map((x) => x.split(": ")[1].split(" "))
+    .map((x) => x.map((y) => parseInt(y, 10)));
 
   let result = 0;
 
@@ -51,13 +59,17 @@ async function resolveFirstChallenge(input) {
     }
   }
 
-  console.log('The sum of all solutions that can be calculated is', result);
+  console.log("The sum of all solutions that can be calculated is", result);
 }
 
 async function resolveSecondChallenge(input) {
-  const equations = input.split('\n');
-  const solutions = equations.map((x) => x.split(': ')[0]).map((x) => parseInt(x, 10));
-  const values = equations.map((x) => x.split(': ')[1].split(' ')).map((x) => x.map((y) => parseInt(y, 10)));
+  const equations = input.split("\n");
+  const solutions = equations
+    .map((x) => x.split(": ")[0])
+    .map((x) => parseInt(x, 10));
+  const values = equations
+    .map((x) => x.split(": ")[1].split(" "))
+    .map((x) => x.map((y) => parseInt(y, 10)));
 
   let result = 0;
 
@@ -67,7 +79,7 @@ async function resolveSecondChallenge(input) {
     }
   }
 
-  console.log('The sum of all solutions that can be calculated is', result);
+  console.log("The sum of all solutions that can be calculated is", result);
 }
 
 run();

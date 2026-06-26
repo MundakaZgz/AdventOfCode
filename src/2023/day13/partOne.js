@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'test_input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\n\n/);
+    const textFilePath = path.join(__dirname, "test_input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\n\n/);
     return data;
   }
 
@@ -15,7 +15,10 @@ module.exports = function () {
 
     for (const row of matrix) {
       for (let i = 0; i < row.length; i++) {
-        const distanceToMirror = Math.min(Math.abs(i - 1), Math.abs(row.length - i - 1));
+        const distanceToMirror = Math.min(
+          Math.abs(i - 1),
+          Math.abs(row.length - i - 1),
+        );
         if (distanceToMirror === 0) {
           continue;
         }
@@ -45,7 +48,7 @@ module.exports = function () {
 
   const printMatrix = (matrix) => {
     for (const row of matrix) {
-      console.log(row.join(''));
+      console.log(row.join(""));
     }
   };
 
@@ -58,17 +61,21 @@ module.exports = function () {
 
     for (const pattern of patterns) {
       console.log(pattern);
-      const patternMatrix = pattern.split('\n').map((row) => row.split(''));
+      const patternMatrix = pattern.split("\n").map((row) => row.split(""));
       printMatrix(patternMatrix);
       const possibleIndexes = findMirrorIndexes(patternMatrix);
-      const possibleRowIndexes = findMirrorIndexes(transposeMatrix(patternMatrix));
+      const possibleRowIndexes = findMirrorIndexes(
+        transposeMatrix(patternMatrix),
+      );
       console.log(possibleIndexes);
       console.log(possibleRowIndexes);
     }
 
     const result = numberOfColumnsToTheLeft + 100 * numberOfRowsAbove;
 
-    console.log(`The number I get after summarizing all of your notes is ${result}`);
+    console.log(
+      `The number I get after summarizing all of your notes is ${result}`,
+    );
   };
 
   main();

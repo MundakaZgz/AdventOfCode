@@ -1,15 +1,15 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
   function extractNumbersFromLine(line) {
-    return parseInt(line.split(':')[1].replaceAll(' ', ''), 10);
+    return parseInt(line.split(":")[1].replaceAll(" ", ""), 10);
   }
 
   function getTimeAndDistanceToBeat(data) {

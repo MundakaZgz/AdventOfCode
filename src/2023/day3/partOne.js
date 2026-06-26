@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
@@ -22,8 +22,15 @@ module.exports = function () {
     const offsites = [-1, 0, 1];
     for (const verticalOffsite of offsites) {
       for (const horizontalOffsite of offsites) {
-        if (y + verticalOffsite >= 0 && y + verticalOffsite < schematic.length && x + horizontalOffsite >= 0 && x + horizontalOffsite < schematic[y + verticalOffsite].length) {
-          if (isASymbol(schematic[x + horizontalOffsite][y + verticalOffsite])) {
+        if (
+          y + verticalOffsite >= 0 &&
+          y + verticalOffsite < schematic.length &&
+          x + horizontalOffsite >= 0 &&
+          x + horizontalOffsite < schematic[y + verticalOffsite].length
+        ) {
+          if (
+            isASymbol(schematic[x + horizontalOffsite][y + verticalOffsite])
+          ) {
             return true;
           }
         }
@@ -48,7 +55,11 @@ module.exports = function () {
           number = number * 10 + parseInt(schematic[i][j], 10);
           // if the number was not qualified for a part number, check if it qualifies now
           if (!qualifiesForPartNumber) {
-            qualifiesForPartNumber = checkIfQualifiesForPartNumber(schematic, i, j);
+            qualifiesForPartNumber = checkIfQualifiesForPartNumber(
+              schematic,
+              i,
+              j,
+            );
           }
           if (j === line.length - 1) {
             // if we are at the end of the line, we add the number to the part numbers
@@ -80,13 +91,17 @@ module.exports = function () {
 
   const main = () => {
     const lines = getData();
-    const shematic = lines.map((line) => line.split(''));
+    const shematic = lines.map((line) => line.split(""));
 
     const partNumbers = getPartNumbers(shematic);
 
-    const qualifiedPartNumbers = partNumbers.filter((partNumber) => partNumber.qualifiesForPartNumber);
+    const qualifiedPartNumbers = partNumbers.filter(
+      (partNumber) => partNumber.qualifiesForPartNumber,
+    );
 
-    console.log(`The sum of all of the part numbers in the engine schematic ${qualifiedPartNumbers.reduce((a, b) => a + b.number, 0)}`);
+    console.log(
+      `The sum of all of the part numbers in the engine schematic ${qualifiedPartNumbers.reduce((a, b) => a + b.number, 0)}`,
+    );
   };
 
   main();

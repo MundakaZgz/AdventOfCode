@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function () {
   function getData() {
-    const textFilePath = path.join(__dirname, 'input.txt');
-    const data = fs.readFileSync(textFilePath, 'utf8').split(/\r?\n/);
+    const textFilePath = path.join(__dirname, "input.txt");
+    const data = fs.readFileSync(textFilePath, "utf8").split(/\r?\n/);
     return data;
   }
 
@@ -20,7 +20,7 @@ module.exports = function () {
 
   function getHandType(hand) {
     const handSet = {};
-    const cards = hand.split(' ')[0].split('');
+    const cards = hand.split(" ")[0].split("");
 
     for (let index = 0; index < cards.length; index++) {
       if (handSet[cards[index]]) {
@@ -50,21 +50,21 @@ module.exports = function () {
       case 5:
         return CARD_TYPES.HIGH_CARD;
       default:
-        return 'Invalid hand';
+        return "Invalid hand";
     }
   }
 
   function getCardValue(card) {
     switch (card) {
-      case 'T':
+      case "T":
         return 10;
-      case 'J':
+      case "J":
         return 11;
-      case 'Q':
+      case "Q":
         return 12;
-      case 'K':
+      case "K":
         return 13;
-      case 'A':
+      case "A":
         return 14;
       default:
         return parseInt(card, 10);
@@ -74,20 +74,22 @@ module.exports = function () {
   function sortHands(a, b) {
     if (a.handType > b.handType) {
       return 1;
-    } if (a.handType < b.handType) {
+    }
+    if (a.handType < b.handType) {
       return -1;
     }
     // If two hands have the same type, a second ordering rule takes effect.
     // Start by comparing the first card in each hand. If these cards are different, the hand with the stronger first card is considered stronger. If the first card in each hand have the same label, however, then move on to considering the second card in each hand. If they differ, the hand with the higher second card wins; otherwise, continue with the third card in each hand, then the fourth, then the fifth.
-    const aCards = a.hand.split(' ')[0].split('');
-    const bCards = b.hand.split(' ')[0].split('');
+    const aCards = a.hand.split(" ")[0].split("");
+    const bCards = b.hand.split(" ")[0].split("");
     for (let index = 0; index < aCards.length; index++) {
       const currentACard = aCards[index];
       const currentBCard = bCards[index];
 
       if (getCardValue(currentACard) > getCardValue(currentBCard)) {
         return 1;
-      } if (getCardValue(currentACard) < getCardValue(currentBCard)) {
+      }
+      if (getCardValue(currentACard) < getCardValue(currentBCard)) {
         return -1;
       }
     }
@@ -106,8 +108,8 @@ module.exports = function () {
     const hands = [];
     for (let index = 0; index < data.length; index++) {
       hands[index] = {
-        hand: data[index].split(' ')[0],
-        bet: data[index].split(' ')[1],
+        hand: data[index].split(" ")[0],
+        bet: data[index].split(" ")[1],
         handType: getHandType(data[index]),
       };
     }
@@ -115,7 +117,9 @@ module.exports = function () {
     const sortedHands = hands.sort(sortHands);
     const ranks = getRanks(sortedHands);
 
-    console.log(`The sum of all the ranks is ${ranks.reduce((a, b) => a + b, 0)}`);
+    console.log(
+      `The sum of all the ranks is ${ranks.reduce((a, b) => a + b, 0)}`,
+    );
   };
 
   main();

@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -18,10 +20,10 @@ function isInvalidId(id) {
 
 async function resolveFirstChallenge(input) {
   let invalidIDsSum = 0;
-  const ranges = input.split(',');
+  const ranges = input.split(",");
 
   for (const line of ranges) {
-    const [min, max] = line.split('-').map((v) => parseInt(v, 10));
+    const [min, max] = line.split("-").map((v) => parseInt(v, 10));
     for (let i = min; i <= max; i++) {
       if (isInvalidId(i)) {
         invalidIDsSum += i;
@@ -29,7 +31,7 @@ async function resolveFirstChallenge(input) {
     }
   }
 
-  console.log('Sum of all invalid IDs:', invalidIDsSum);
+  console.log("Sum of all invalid IDs:", invalidIDsSum);
 }
 
 function hasSequences(id) {
@@ -54,10 +56,10 @@ function hasSequences(id) {
 
 async function resolveSecondChallenge(input) {
   let invalidIDsSum = 0;
-  const ranges = input.split(',');
+  const ranges = input.split(",");
 
   for (const line of ranges) {
-    const [min, max] = line.split('-').map((v) => parseInt(v, 10));
+    const [min, max] = line.split("-").map((v) => parseInt(v, 10));
     for (let i = min; i <= max; i++) {
       if (isInvalidId(i) || hasSequences(i)) {
         invalidIDsSum += i;
@@ -65,7 +67,7 @@ async function resolveSecondChallenge(input) {
     }
   }
 
-  console.log('Sum of all invalid IDs:', invalidIDsSum);
+  console.log("Sum of all invalid IDs:", invalidIDsSum);
 }
 
 run();

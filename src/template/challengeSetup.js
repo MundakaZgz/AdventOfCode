@@ -1,31 +1,38 @@
-const path = require('path');
-const fs = require('node:fs');
-const https = require('https');
+import fs from "node:fs";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
 
 async function copyTemplate() {
   const year = process.argv[2];
   const day = process.argv[3];
-  let folderName = path.join(__dirname, '..', year);
+
+  dotenv.config();
 
   if (!year) {
-    console.error('Please specify a year');
+    console.error("Please specify a year");
     return;
   }
 
   if (!day) {
-    console.error('Please specify a day');
+    console.error("Please specify a day");
+    return;
+  }
+
+  if (!process.env.AOC_SESSION_COOKIE) {
+    console.error("Please specify a session cookie in .env file");
     return;
   }
 
   // Preparing folder structure
+  let folderName = new URL(`../${year}`, import.meta.url);
   try {
-    console.log('Creating folder structure');
-    if (!fs.existsSync(folderName)) {
-      fs.mkdirSync(folderName);
+    if (!fs.existsSync(fileURLToPath(folderName.href))) {
+      console.log(`Year folder ${year} does not exist, creating...`);
+      fs.mkdirSync(fileURLToPath(folderName.href));
     }
-    folderName = path.join(folderName, `day${day}`);
-    if (!fs.existsSync(folderName)) {
-      fs.mkdirSync(folderName);
+    let dayFolder = new URL(`../${year}/day${day}`, import.meta.url);
+    if (!fs.existsSync(fileURLToPath(dayFolder.href))) {
+      fs.mkdirSync(fileURLToPath(dayFolder.href));
     }
   } catch (err) {
     console.error(err);
@@ -33,42 +40,48 @@ async function copyTemplate() {
 
   // Copy template file from src/template/solution.js to recently created folder
   try {
-    console.log('Copying template file');
-    fs.copyFileSync(path.join(__dirname, 'template.js'), path.join(folderName, 'index.js'));
+    console.log("Copying template file");
+    fs.copyFileSync(
+      new URL("./template.js", import.meta.url),
+      new URL(`../${year}/day${day}/index.js`, import.meta.url),
+    );
   } catch (err) {
     console.error(err);
   }
 
-  // Copy input data from AOC to recently created folder
-  const url = `https://adventofcode.com/${year}/day/${day}/input`;
+  //   // Copy input data from AOC to recently created folder
+  //   const url = `https://adventofcode.com/${year}/day/${day}/input`;
 
-  console.log(`Downloading input data from ${url}`);
+  //   console.log(`Downloading input data from ${url}`);
 
-  // Session cookie is required to download the input data
-  const options = {
-    headers: {
-      Cookie: `session=${process.env.AOC_SESSION_COOKIE}`,
-    },
-  };
+  //   const options = {
+  //     headers: {
+  //       Cookie: `session=${process.env.AOC_SESSION_COOKIE};`,
+  //       'Host': 'adventofcode.com',
+  //       'User-Agent': 'curl/8.7.1',
+  //       'Accept': '*/*'
+  //     },
+  //   };
 
-  await https.get(url, options, (res) => {
-    if (res.statusCode !== 200) {
-      console.error(`Error: ${res.statusCode}`);
-      return;
-    }
+  //   // TODO: Check why this is not working
+  //   await https.get(url, options, (res) => {
+  //     if (res.statusCode !== 200) {
+  //       console.error(`Error: ${res.statusCode}`);
+  //       return;
+  //     }
 
-    let data = '';
-    res.on('data', (chunk) => {
-      data += chunk;
-    });
+  //     let data = '';
+  //     res.on('data', (chunk) => {
+  //       data += chunk;
+  //     });
 
-    res.on('end', () => {
-      fs.writeFileSync(path.join(folderName, 'input.txt'), data);
-      console.log('Input data copied');
-    });
-  }).on('error', (err) => {
-    console.error(`Error: ${err.message}`);
-  });
+  //     res.on('end', () => {
+  //       fs.writeFileSync(new URL(`../${year}/day${day}/input.txt`, import.meta.url), data);
+  //       console.log('Input data copied');
+  //     });
+  //   }).on('error', (err) => {
+  //     console.error(`Error: ${err.message}`);
+  //   });
 }
 
-module.exports = copyTemplate();
+export default copyTemplate;

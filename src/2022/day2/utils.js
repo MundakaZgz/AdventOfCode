@@ -1,17 +1,17 @@
 const strategyToWin = {
-  A: 'Y',
-  B: 'Z',
-  C: 'X',
+  A: "Y",
+  B: "Z",
+  C: "X",
 };
 const strategyToDraw = {
-  A: 'X',
-  B: 'Y',
-  C: 'Z',
+  A: "X",
+  B: "Y",
+  C: "Z",
 };
 const strategyToLose = {
-  A: 'Z',
-  B: 'X',
-  C: 'Y',
+  A: "Z",
+  B: "X",
+  C: "Y",
 };
 
 const scorePerSelection = {
@@ -27,36 +27,48 @@ const strategiesPerRound = {
 };
 
 const getScore = (rival, me) => {
-  if (rival == 'A') { // stone
-    if (me == 'X') { // stone
+  if (rival == "A") {
+    // stone
+    if (me == "X") {
+      // stone
       return 3;
     }
-    if (me == 'Y') { // scissors
+    if (me == "Y") {
+      // scissors
       return 6;
     }
-    if (me == 'Z') { // paper
+    if (me == "Z") {
+      // paper
       return 0;
     }
   }
-  if (rival == 'B') { // scissors
-    if (me == 'X') { // stone
+  if (rival == "B") {
+    // scissors
+    if (me == "X") {
+      // stone
       return 0;
     }
-    if (me == 'Y') { // scissors
+    if (me == "Y") {
+      // scissors
       return 3;
     }
-    if (me == 'Z') { // paper
+    if (me == "Z") {
+      // paper
       return 6;
     }
   }
-  if (rival == 'C') { // paper
-    if (me == 'X') { // stone
+  if (rival == "C") {
+    // paper
+    if (me == "X") {
+      // stone
       return 6;
     }
-    if (me == 'Y') { // scissors
+    if (me == "Y") {
+      // scissors
       return 0;
     }
-    if (me == 'Z') { // paper
+    if (me == "Z") {
+      // paper
       return 3;
     }
   }
@@ -69,7 +81,7 @@ const getPlayScoreFollowingStrategy = (rival, whatShouldIDo) => {
   return getPlayScore(rival, myMove);
 };
 
-module.exports = {
+export default {
   getPlayScore,
   getPlayScoreFollowingStrategy,
 };

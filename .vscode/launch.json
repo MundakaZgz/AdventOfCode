@@ -1,18 +1,45 @@
 {
-  // Use IntelliSense para saber los atributos posibles.
-  // Mantenga el puntero para ver las descripciones de los existentes atributos.
-  // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "AOC: Debug (year/day)",
       "type": "node",
       "request": "launch",
-      "name": "Iniciar el programa",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
       "program": "${workspaceFolder}/index.js",
-      "args": ["2025","06"]
+      "args": ["${input:year}", "${input:day}"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "AOC: Debug 2022 Day 5",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/index.js",
+      "args": ["2022", "5"],
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "AOC: Attach (npm start --inspect)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "year",
+      "type": "promptString",
+      "description": "Year (e.g. 2022)",
+      "default": "2022"
+    },
+    {
+      "id": "day",
+      "type": "promptString",
+      "description": "Day (e.g. 5)",
+      "default": "5"
     }
   ]
 }

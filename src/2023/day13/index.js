@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input_text.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input_text.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -21,19 +23,18 @@ function isMirrorArray(arr, index) {
   return mirrored;
 }
 
-function findMirrorRowsAndColumns(matrix) {
-
-}
+function findMirrorRowsAndColumns(matrix) {}
 
 async function resolveFirstChallenge(input) {
   let matrix = [];
   let result = 0;
 
-  for (const line of input.split('\n')) {
+  for (const line of input.split("\n")) {
     if (line.length === 0) {
       const mirrorResults = findMirrorRowsAndColumns(matrix);
       for (let i = 0; i++; i < mirrorResults.mirrorRows.length) {
-        result += mirrorResults.mirrorColumns[i] + 100 * mirrorResults.mirrorRows[i];
+        result +=
+          mirrorResults.mirrorColumns[i] + 100 * mirrorResults.mirrorRows[i];
       }
       matrix = [];
     } else {
@@ -41,11 +42,13 @@ async function resolveFirstChallenge(input) {
     }
   }
 
-  console.log(`The number I get after summarizing all of your notes is ${result}`);
+  console.log(
+    `The number I get after summarizing all of your notes is ${result}`,
+  );
 }
 
 async function resolveSecondChallenge(input) {
-  console.log('Second challenge not implemented');
+  console.log("Second challenge not implemented");
 }
 
 run();

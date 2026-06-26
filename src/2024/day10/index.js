@@ -1,10 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const uniquePaths = new Set();
 
 async function run() {
-  const input = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8').trim();
+  const input = fs
+    .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+    .trim();
   await resolveFirstChallenge(input);
   await resolveSecondChallenge(input);
 }
@@ -13,7 +15,7 @@ function findStartingPoints(map) {
   const startingPoints = [];
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
-      if (map[i][j] === '0') {
+      if (map[i][j] === "0") {
         startingPoints.push({ x: j, y: i });
       }
     }
@@ -40,7 +42,10 @@ function getNumOfTrailsFromStartingPoint(map, startingPoint, x, y, visited) {
   visited[y][x] = true;
 
   // check x + 1
-  if (x + 1 < map[0].length && parseInt(map[y][x + 1], 10) === currentHeight + 1) {
+  if (
+    x + 1 < map[0].length &&
+    parseInt(map[y][x + 1], 10) === currentHeight + 1
+  ) {
     getNumOfTrailsFromStartingPoint(map, startingPoint, x + 1, y, visited);
   }
 
@@ -63,9 +68,11 @@ function getNumOfTrailsFromStartingPoint(map, startingPoint, x, y, visited) {
 function countDistinctTrails(map, x, y, currentHeight, visited) {
   // Si está fuera de los límites o ya visitado, retorna 0
   if (
-    x < 0 || y < 0
-    || x >= map[0].length || y >= map.length
-    || visited[y][x]
+    x < 0 ||
+    y < 0 ||
+    x >= map[0].length ||
+    y >= map.length ||
+    visited[y][x]
   ) {
     return 0;
   }
@@ -93,22 +100,32 @@ function countDistinctTrails(map, x, y, currentHeight, visited) {
 }
 
 async function resolveFirstChallenge(input) {
-  const map = input.split('\n').map((line) => line.split(''));
+  const map = input.split("\n").map((line) => line.split(""));
   const startingPoints = findStartingPoints(map);
   for (let i = 0; i < startingPoints.length; i++) {
-    const visited = Array(map.length).fill(false).map(() => Array(map[0].length).fill(false));
-    getNumOfTrailsFromStartingPoint(map, startingPoints[i], startingPoints[i].x, startingPoints[i].y, visited);
+    const visited = Array(map.length)
+      .fill(false)
+      .map(() => Array(map[0].length).fill(false));
+    getNumOfTrailsFromStartingPoint(
+      map,
+      startingPoints[i],
+      startingPoints[i].x,
+      startingPoints[i].y,
+      visited,
+    );
   }
 
-  console.log('The score is', uniquePaths.size);
+  console.log("The score is", uniquePaths.size);
 }
 
 async function resolveSecondChallenge(input) {
-  const map = input.split('\n').map((line) => line.split(''));
+  const map = input.split("\n").map((line) => line.split(""));
   let rating = 0;
   const startingPoints = findStartingPoints(map);
   for (let i = 0; i < startingPoints.length; i++) {
-    const visited = Array(map.length).fill(false).map(() => Array(map[0].length).fill(false));
+    const visited = Array(map.length)
+      .fill(false)
+      .map(() => Array(map[0].length).fill(false));
     rating += countDistinctTrails(
       map,
       startingPoints[i].x,
@@ -117,7 +134,7 @@ async function resolveSecondChallenge(input) {
       visited,
     );
   }
-  console.log('The rating is', rating);
+  console.log("The rating is", rating);
 }
 
 run();
