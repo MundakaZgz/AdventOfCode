@@ -1,86 +1,89 @@
 # 🎄 Advent Of Code 🎄
 
-Soluciones a los desafíos de [Advent of Code](https://adventofcode.com) en JavaScript (Node.js).
+Solutions to the [Advent of Code](https://adventofcode.com) challenges in JavaScript (Node.js).
 
-## Requisitos
+## Requirements
 
-- [Node.js](https://nodejs.org/) >= 18
-- Variable de entorno `AOC_SESSION_COOKIE` con la cookie de sesión de [adventofcode.com](https://adventofcode.com) (necesaria para descargar inputs automáticamente)
+- [Node.js](https://nodejs.org/) >= 22
+- npm dependencies installed with `npm install`
+- Optional `.env` file with `AOC_SESSION_COOKIE=your_cookie` if you want to scaffold a missing challenge
+
+> [!WARNING]
+> Automatic `input.txt` download is currently disabled in `src/template/challengeSetup.js`
 
 ## Getting started
 
-1. Decide si quieres programar en local o en dev container
-2. Asigna tu session cookie de AOC: `export AOC_SESSION_COOKIE=tu_cookie`
-3. Ejecuta `npm start <año> <día>`. Si la solución existe, se ejecuta; si no, se prepara el código base y se descarga el `input.txt`
+1. Install dependencies with `npm install`
+2. Optionally create a `.env` file with `AOC_SESSION_COOKIE=your_cookie`
+3. Run `npm start <year> <day>`
+4. If the target challenge does not exist, the project creates the folder and copies the template `index.js`
+
+Examples:
+
+- `npm start 2024 1`
+- `npm start 2025 1`
 
 ## Challenge status per year
 
-| Año | Días completados | Estado |
+| Year | Completed days | Status |
 |---|---|---|
-| 2022 | 15/25 | 🔄 En progreso |
-| 2023 | 13/25 | 🔄 En progreso |
-| 2024 | 11/25 | 🔄 En progreso |
-| 2025 | 0/25 | ⏳ Pendiente |
+| 2022 | 15/25 | 🔄 In progress |
+| 2023 | 13/25 | 🔄 In progress |
+| 2024 | 11/25 | 🔄 In progress |
+| 2025 | 6/25 | 🔄 In progress |
 
-## Estructura del proyecto
+Notes:
+
+- The 2022 total includes `day1` to `day9` in `src/2022` and archived `day10` to `day15` in `src/2022_backup`.
+- The 2025 folder currently uses zero-padded names (`day01` to `day06`) and also contains an extra `day6` directory.
+
+## Project structure
 
 ```
 AdventOfCode/
-├── index.js                  # Entry point: node index.js <año> <día>
+├── index.js                  # Entry point: node index.js <year> <day>
+├── .nvmrc                    # Node.js version used by the project
+├── eslint.config.js          # Active ESLint flat config
+├── .eslintrc.yml             # Legacy ESLint config kept in the repo
 ├── src/
-│   ├── template/             # Template para nuevos desafíos
-│   │   ├── template.js       #   Código base de una solución
-│   │   └── challengeSetup.js #   Script de auto-setup + descarga de input
-│   ├── 2022/
-│   │   ├── index.js
-│   │   ├── day1/
-│   │   │   ├── index.js      #   Orchestrador (require partOne + partTwo)
-│   │   │   ├── partOne.js    #   Solución parte 1
-│   │   │   ├── partTwo.js    #   Solución parte 2
-│   │   │   ├── input.txt     #   Input del desafío
-│   │   │   └── README.md     #   Enunciado del desafío
-│   │   └── day2/ ... day25/
+│   ├── template/             # Template for new challenges
+│   │   ├── template.js       #   Base code for a solution
+│   │   └── challengeSetup.js #   Auto-setup + input download script
+│   ├── 2022/                 # Active 2022 solutions (day1-day9)
+│   ├── 2022_backup/          # Archived 2022 solutions (day10-day15)
 │   ├── 2023/ (day1-day13)
-│   └── 2024/ (day1-day11)
-├── .devcontainer/            # Configuración para dev container (VS Code)
+│   ├── 2024/ (day1-day11)
+│   └── 2025/ (day01-day06)
 ├── package.json
-└── .eslintrc.yml
+├── .prettierignore
+└── .prettierrc
+
 ```
 
-## Comandos
+## Commands
 
-| Comando | Descripción |
-|---|---|---|
-| `npm start <año> <día>` | Ejecuta la solución o configura el template si no existe |
-| `npm test` | Ejecuta los tests con Mocha (`src/**/*.test.js`) |
-| `npm run lint` | Analiza el código con ESLint |
-| `npm run debug` | Ejecuta con inspector de Node.js (`--inspect-brk`) |
-
-## Formato de las soluciones
-
-Existen dos patrones en el repositorio:
-
-- **Patrón 2022** — `index.js` orquestra la ejecución de `partOne.js` y `partTwo.js` por separado.
-- **Patrón template/2024** — Un único `index.js` que resuelve ambas partes secuencialmente.
-
-Ambos son compatibles con el entry point `index.js` raíz.
+| Command | Description |
+|---|---|
+| `npm start <year> <day>` | Runs `index.js` with the Node inspector enabled; if the challenge folder does not exist, it scaffolds it from the template |
+| `npm test` | Runs tests with Mocha (`src/**/*.test.js`) |
+| `npm run lint` | Runs ESLint on `src/**/*.js` using `eslint.config.js` |
+| `npm run debug` | Runs with the Node.js inspector (`--inspect-brk`) |
+| `npm run prettier` | Runs Prettier on `src/**/*.js` |
 
 ## Tests
 
-El proyecto usa [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/) para testing.
+The project uses [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/) for testing.
 
 ```bash
 npm test
 ```
 
-Los tests deben ubicarse junto a las soluciones con el patrón `*.test.js`.
+Tests should be placed next to the solutions using the `*.test.js` pattern.
 
-## Dev container
+## Technologies
 
-El repositorio incluye configuración para [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) de VS Code, lo que permite un entorno de desarrollo reproducible sin instalar dependencias localmente.
-
-## Tecnologías
-
-- **Runtime:** Node.js
+- **Runtime:** Node.js 22
+- **Language:** JavaScript ES modules
 - **Testing:** Mocha + Chai
-- **Linting:** ESLint (configuración airbnb-base)
+- **Linting:** ESLint flat config + eslint-config-prettier
+- **Formatting:** Prettier
